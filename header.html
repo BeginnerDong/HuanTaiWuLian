@@ -1,0 +1,165 @@
+
+<div id="header_app" class="bgc-white">
+	<div class="indNavbar w1200 pdtb10 pr flexRowBetween">
+		<div class="leftLogo flex">
+			<img class="logo" src="images/logo.png">
+			<div class="color9 fs12 text">
+				<p>聚焦智慧城市</p>
+				<p>IoT 综合管理服务</p>
+			</div>
+		</div>
+		
+		<div class="flexEnd rightNav">
+			<div class="list fr">
+				<ul>
+					<li :class="currentUrl=='/index.html'?'on':''">
+						<a href="index.html">首页</a>
+					</li>
+					<li :class="currentUrl=='/proCenter.html'?'on':''">
+						<a href="proCenter.html">产品中心</a>
+					</li>
+					<li :class="currentUrl=='/caseList.html'?'on':''">
+						<a href="caseList.html">精品案例</a>
+					</li>
+					<li :class="currentUrl=='/newsCenter.html'?'on':''">
+						<a href="newsCenter.html">新闻中心</a>
+					</li>
+					<li :class="currentUrl=='/aboutUs.html'?'on':''">
+						<a href="aboutUs.html">关于我们</a>
+					</li>
+					<li :class="currentUrl=='/recruit.html'?'on':''">
+						<a href="recruit.html">招聘英才</a>
+					</li>
+				</ul>
+			</div>
+			<div class="Rphone flex mgl10">
+				<img class="icon mgr10" src="images/product%20center-icon.png">
+				<div class="pubcolor number">
+					<p>服务热线</p>
+					<p class="fs20" style="font-style: italic;">029-85391630</p>
+				</div>
+			</div>
+		</div>
+		
+		<div class="navBtn center iconfont" @click="topNavBtn">&#xe605;</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	 $(function(){
+		$(".indNavbar .list li").click(function(){
+			console.log(123);
+			$(this).addClass("on").siblings().removeClass("on")
+		});
+	})
+</script>
+
+<script type="text/javascript">
+
+	var header_app = new Vue({
+	    el: '#header_app',
+	    data:function(){
+	        return {
+	        	is_toggle:false,
+				shownav:true,
+				currentUrl:''
+	        }
+	    },
+	    created:function () {
+	        var self = this;
+			var currentUrl = window.base.GetUrlRelativePath();
+		
+			var reg = /\/([^\/]+)\.html/i;
+			if(reg.exec(currentUrl)&&reg.exec(currentUrl)[0]){
+				self.currentUrl = reg.exec(currentUrl)[0];
+			}else{
+				self.currentUrl = '/index.html';
+			};
+			console.log('self.currentUrl',self.currentUrl)
+	    },
+	    methods: {
+			toggleMenu:function(e){
+			    var self = this;
+			    self.is_toggle = !self.is_toggle;
+				var scrollTop = document.documentElement.scrollTop||document.body.scrollTop;
+				var navigation = document.getElementById('navigation');
+				if(scrollTop<100){
+					if(self.is_toggle){
+						$("#navigation").css('background','rgb(0, 0, 0,0.6)');
+					}else{
+						$("#navigation").css('background','none');
+					};
+				};	
+			},
+			topNavBtn:function(){
+				if($(".indNavbar .list").css('display')=='none'){
+					$(".indNavbar .list").show()
+				}else{
+					$(".indNavbar .list").hide()
+				}
+			},
+	        
+	    	changeHeaderStyle: function(){
+	    		var self = this;
+	    		var scrollTop = document.documentElement.scrollTop||document.body.scrollTop;
+	    		var navigation = document.getElementById('navigation');
+					if(scrollTop>=100){
+						$("#navigation").css('position','fixed');
+						$("#navigation").addClass('animated.faster  slideInDown delay-0.1s');
+						console.log('is_toggle-before08',self.is_toggle)
+						if(!self.is_toggle){
+							navigation.addEventListener('animationend', function() {
+								$("#navigation").css('background-color','hsla(0, 0%, 0%, 0.6)');
+							});
+						};
+					}else{          //恢复正常
+						$("#navigation").css('position','absolute');
+						if(!self.is_toggle){
+							$("#navigation").css('background','none');
+							$("#navigation").css('opacity','1');
+						};
+						$("#navigation").removeClass('animated.faster  slideInDown delay-0.1s');
+					}			
+	    	}
+	    }
+	});   
+</script>
+
+<style>
+ /*网站导航*/
+.indNavbar .logo{ width:170px; height:83px; display: block; margin-right:15px;}
+.leftLogo .text{border-left: 1px solid #d5d5d5;padding:0 15px;}
+.indNavbar .rightNav{width: 72%; }
+.indNavbar .list{ width: 75%; padding-right: 20px;box-sizing: border-box;}
+.indNavbar .list ul{ width:100%; display: flex;justify-content: space-around;flex-wrap: nowrap;}
+.indNavbar .list li a{ display: block; line-height: 24px; font-size: 16px;padding: 0 8px;}
+.indNavbar .list li.on a{color: #0d6fb8;}
+.indNavbar .navBtn{ width: 36px; height: 36px; line-height: 36px; font-size: 26px;position: absolute; right: 10px; top:12px; z-index: 66; display: none;background: rgba(0,0,0,0.6);border-radius: 5px;color: #fff;}
+
+@media screen and ( max-width: 1000px){ 
+	.indNavbar .logo{ width: auto; height: 40px;}
+}
+@media screen and ( max-width: 750px){ 
+	.indNavbar.w1200{ width: 100%!important;}
+	.indNavbar .logo{ width: auto; height:32px; margin-left:10px;margin: 0 10px;}
+	.leftLogo .text{padding: 0 10px;}
+	.leftLogo .text p{line-height: 18px;}
+	
+	.indNavbar .navBtn{ display: block;}
+	
+	.indNavbar .rightNav{width: auto;}
+	.indNavbar .rightNav .Rphone{position: absolute; top: 50%;right: 30%; transform: translateY(-50%);}
+	.indNavbar .rightNav .Rphone p{  display: none;}
+	.indNavbar .rightNav .Rphone .icon{width:30px; height: 30px;}
+	.indNavbar{position: fixed;top: 0; left: 0; z-index: 66; padding: 10px 0;border-bottom: 1px solid #eee; background: #fff;}
+	.indNavbar .list{ width: 100%;top: 60px; background: rgba(0,0,0,0.5);display: none;position: fixed;left: 0;    transform: translateY(0); padding-right: 0;}
+	.indNavbar .list ul{display: inline-block; text-align: center;}
+	.indNavbar .list li{ width: 100%;}
+	.indNavbar .list li a{color: #fff; padding-bottom: 5px; line-height: 40px; }
+	.indNavbar .list li.on{ background:#0d6fb8;}
+	.indNavbar .list li.on a{ font-size: 18px; color: #fff;}
+	.indNavbar .list li.on a::after{ height:0px;}
+}
+
+</style>
+

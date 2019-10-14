@@ -1,0 +1,134 @@
+<footer class="oh footer white" id="footer_app">
+	<div class="w1200 flexRowBetween fs13">
+		<div class="item one">
+			<h1 class="title">企业简介</h1>
+			<p class="text fs12">环太物联是一家融合物联网整体解决方案提供商，创造由软件定义的物联网产品和应用服务解决方案，以贯通融合感知、物联网络、集成应用和控制执行的全链智慧，助力传统企业变革升级。</p>
+		</div>
+		<div class="item two">
+			<h1 class="title">网站导航</h1>
+			<div class="samllis flexRowBetween">
+				<div class="flexColumn">
+					<span>首页</span>
+					<span>关于我们</span>
+					<span>产品中心</span>
+					<span>项目案例</span>
+				</div>
+				<div class="flexColumn">
+					<span>招贤纳士</span>
+					<span>新闻中心</span>
+				</div>
+			</div>
+		</div>
+		<div class="item three">
+			<h1 class="title">联系我们</h1>
+			<div class="flex">
+				<div class="left">
+					<img class="ewm" src="images/product%20center-img3.png" >
+					<p class="center mgt10">移动公众号</p>
+				</div>
+				<div class="flexColumn right">
+					<span>地址&nbsp;&nbsp;西安市碑林区李家村万达广场4号楼15F</span>
+					<span>电话&nbsp;&nbsp;029-85391630</span>
+					<span>邮箱&nbsp;&nbsp;wanpan@huan-tai.com</span>
+				</div>
+			</div>
+		</div>
+		
+		
+	</div>
+	<div class="copyright center">
+		<p>{{copyright}}</p>
+	</div>
+	
+</footer>
+<script type="text/javascript">
+
+	var footer_app = new Vue({
+	    el: '#footer_app',
+	    data:function(){
+	        return {
+	        	is_toggle:false,
+				qrImg:[],
+				address:'',
+				phone:'',
+				qrImgEwm:[
+					{
+						ewmUrl:"images/home-img1.jpg",
+						ewmName:"企业微博"
+					},
+					{
+						ewmUrl:"images/home-img2.png",
+						ewmName:"企业公众号"
+					}
+				],
+				copyright:'COPYRIGHT © 2010- 2019.版权所有 西安环太物联技术有限公司'
+	        }
+	    },
+	    created:function () {
+	        var self = this;
+			self.getMainData()
+	        
+			
+	    },
+	    methods: {
+			
+			getMainData: function(id) {
+				var self = this;
+				var postData = {};
+				postData.searchItem = {
+					thirdapp_id:2,
+					title:'联系我们'
+				};
+				var callback = (res) => {
+					console.log('getMainData', res);
+					self.mainData = res.info.data[0];
+					self.address = self.mainData.url;
+					self.phone = self.mainData.description
+				};
+				window.base.labelGet(postData, callback);
+			},
+	        
+	    	
+	    }
+	});   
+</script>
+
+<style type="text/css">
+	/* 页脚footer */
+	footer{background: #393838; padding: 40px 0 0 0;}
+	footer .w1200{align-items: initial;}
+	footer .item{ line-height: 22px; box-sizing: border-box;}
+	footer .item.one{width:25%;}
+	footer .item.two{width: 20%;}
+	footer .item.three{/* width:40%; */}
+	footer .item .title{font-size: 16px;padding-bottom: 10px; position: relative; margin-bottom: 40px;}
+	footer .item .title::after{content: ''; width: 28px; height: 4px;background:#0071C5; position: absolute;left: 0; bottom: 0;}
+	footer .two .samllis>div{align-items: flex-start;}
+	footer .two .samllis>div span{ margin-bottom: 10px;}
+	footer .three .ewm{ width: 90px; height: 90px; display: block;}
+	footer .three .flex{align-items: initial;}
+	footer .three .right{ margin-left: 15px;}
+	footer .three .right span{width: 100%; margin-bottom: 10px;}
+	footer .copyright{ font-size: 14px; clear: both; padding: 10px 2%; color: #fff;margin-top: 30px;padding: 20px 0; background: #282828;}
+	/* 页脚footer end */
+	
+@media screen and ( max-width:750px){ 
+	
+	footer{ padding:20px 0 0 0;}
+	footer .w1200{ flex-wrap: wrap; font-size: 12px;}
+	footer .item.one{width:100%; }
+	footer .item.two{width:100%; margin: 20px auto;}
+	footer .item.two .samllis{justify-content: inherit; flex-direction: initial; display: block;}
+	footer .two .samllis>div{width: 100%;flex-direction: row;}
+	footer .two .samllis>div span{width: 25%; margin-bottom: 5px;}
+	
+	footer .item.three{width: 100%; }
+	footer .item.three .title{ display: none;}
+	footer .item .title{ margin-bottom: 10px;}
+	footer .copyright{ font-size: 12px; clear: both;}
+	footer .copyright p{ line-height: 20px;}
+}
+</style>
+
+
+

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="renderer" content="webkit">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+		<title>新闻中心</title>
+		<link type="text/css" rel="stylesheet" href="css/public.css">
+		<link type="text/css" rel="stylesheet" href="font/iconfont.css">
+		<link rel="stylesheet" type="text/css" href="css/page.css">
+		<link rel="stylesheet" type="text/css" href="css/mainInFor.css">
+		<link rel="stylesheet" type="text/css" href="css/newsBaner.css">
+		<script src="./js/vue.js"></script>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/include.js"></script>
+		<script type="text/javascript" src="js/base.js"></script>
+	</head>
+
+	<body>
+		<div id="app">
+			<!-- 网站导航 -->
+			<div class="pubHeader">
+				<include src="header.html"></include>
+			</div>
+
+			<div class="pr topSamllBan">
+				<img class="bjPic" src="images/new-banner.jpg" alt="">
+			</div>
+			
+			<!-- 网站页面导航 -->
+			<div class="borderB1 pdtb10">
+				<div class="w1200 flex color6 page_crumbNav">
+					<img src="images/vproductCenter-icon2.png" >
+					<a class="mglr10">首页</a>/<span class="mglr10 pubcolor">新闻中心</span>
+				</div>
+			</div>
+			<div class="pr">
+				<div class="w1200 oh">
+					<div class="navtab">
+						<span :class="current==1?'on':''" @click="chagetape('1')">新闻中心</span>
+						<span :class="current==2?'on':''" @click="chagetape('2')">行业新闻</span>
+					</div>	
+					
+					<div class="newsIndex flexRowBetween" v-show="current==1">
+						<div class="left">
+							<div class="newLeftBanner">
+								<include src="newsBanner.html"></include>
+							</div>
+						</div>
+						<div class="right">
+							<div class="newslist">
+								<ul>
+									<li v-for="(item,index) in newslist">
+										<a href="newsCenterDetal.html">
+											<div class="time center">
+												<h1 class="day ftw">17</h1>
+												<h2 class="data ftw">2019.10</h2>
+											</div>
+											<div class="infor">
+												<h1 class="tit avoidOverflow">携手共赢，广联达与乌鲁木齐市造价站签署项目开发协议</h1>
+												<p class="avoidOverflow2 color9 fs13">2019年9月26日，乌鲁木齐市建设工程造价管理站与广联达科技股份有限公司签署乌市建设工程综合材料价格采集、编制审查管理开发项目协议。</p>
+											</div>
+										</a>
+									</li>
+								</ul>
+							</div>
+						
+							<div class="all-pages">
+								<span>共:10页</span>
+								<span class="no-prev">上一页</span>
+							    <span class="current">1</span>
+							    <a href="#">2</a><a href="#">3</a>&nbsp;...&nbsp;<a href="#">100</a><a href="#" class="next">下一页</a>
+							</div>
+						</div>
+					</div>
+					<div class="newsIndex flexRowBetween" v-show="current==2">
+						<div class="left">
+							<div class="newLeftBanner">
+								<include src="newsBannerTwo.html"></include>
+							</div>
+						</div>
+						<div class="right">
+							<div class="newslist">
+								<ul>
+									<li v-for="(item,index) in newslist">
+										<a href="newsCenterDetal.html">
+											<div class="time center">
+												<h1 class="day ftw">18</h1>
+												<h2 class="data ftw">2019.10</h2>
+											</div>
+											<div class="infor">
+												<h1 class="tit avoidOverflow">数字化企业研习社走进广联达  共探工业互联网产业变革</h1>
+												<p class="avoidOverflow2 color9 fs13">9月22日，数字化企业研习社成员走进广联达，与多位专家学者、行业大咖共聚一堂，调研参访广联达数字建筑创新体验中心，并以“数字孪生：从中国制造到中国建造”为主题，洞察行业风向</p>
+											</div>
+										</a>
+									</li>
+								</ul>
+							</div>
+						
+							<div class="all-pages">
+								<span>共:10页</span>
+								<span class="no-prev">上一页</span>
+								<span class="current">1</span>
+								<a href="#">2</a><a href="#">3</a>&nbsp;...&nbsp;<a href="#">100</a><a href="#" class="next">下一页</a>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+			
+			<include src="footer.html"></include>
+		</div>
+	</body>
+
+<script type="text/javascript">
+		var app = new Vue({
+			el: '#app',
+			data: function() {
+				return {
+					is_show:false,
+					is_toggle: false,
+					mainData:[],
+					current:1,
+					newslist:[
+						{},{},{},{}
+					]
+				}
+			},
+			created: function() {
+				var self = this;
+				window.onload = function() {
+				};
+				self.getMainData()
+
+			},
+			methods: {
+				chagetape(current){
+					var self = this;
+					if(current!=self.current){
+						self.current =current
+					}
+				},
+				goDetail(id){
+					window.base.location
+				},
+				getMainData: function(id) {
+					var self = this;
+					var callback = function(res) {
+						console.log('getMainData', res);
+						self.mainData.push.apply(self.mainData, res.info.data);
+						for (var i = 0; i < self.mainData.length; i++) {
+							self[self.mainData[i].title] = self.mainData[i];
+						};
+					};
+					console.log('self.mainData', self.mainData)
+				}
+			}
+		});
+	</script>
+<style>
+.navtab{padding: 30px 0 20px 0; display: flex;flex-wrap: wrap;}
+.navtab span{padding: 0 15px 10px 15px; font-size: 20px; color: #666;border-bottom: 3px solid #fff; margin-right: 20px; float: left;}
+.navtab .on{color: #333; font-weight: bold;border-color: #149ce7;}
+
+.newsIndex{align-items: initial;}
+.newsIndex .left{width: 42%; padding-bottom: 30px;}
+.newsIndex .right{width: 53%;}
+
+.newLeftBanner{width:100%; height: 297px;}
+.newslist li {align-items: initial; margin-bottom: 40px;}
+.newslist li a{width: 100%; height: 100%; display: block; display: flex;}
+.newslist li .time{width: 20%;padding-right:25px; font-family: 'Bebas'; box-sizing: border-box;}
+.newslist li .day{ font-size: 40px; line-height: 50px;padding-bottom: 5px;border-bottom: 1px solid #eee;margin-bottom: 5px; }
+.newslist li .data{font-size: 16px;}
+.newslist li .infor{width: 80%;}
+.newslist li .infor .tit{font-size: 18px;padding:10px 0 15px 0;}
+.newslist li:hover .time,.newslist li:hover .tit,.newslist li:hover .infor p{color: #149ce7;}
+
+/* 页码 */
+.all-pages{ width: 100%;clear:both; margin:0 auto;padding: 20px 0; text-align:center; display: flex;align-items: center; flex-wrap: wrap; }
+.all-pages a,.all-pages span{ display:inline-block; padding:0 8px; height:30px; vertical-align:middle; white-space:nowrap; text-align:center;line-height:30px; color:#333; font-family:arial; background:#fff; border:1px solid #e6e6e6; border-radius: 3px; margin-bottom: 10px;margin-right: 5px;}
+.all-pages a:hover,.all-pages span:hover{border:1px solid #149ce7;}
+.all-pages .current{ background:#149ce7; color:#fff; border:1px solid #149ce7;}
+
+
+
+@media screen and ( max-width:780px){ 
+	.navtab{ justify-content: center;}
+	.navtab span{font-size: 18px;}
+	.newLeftBanner{height: 195px;}
+}
+@media screen and ( max-width:500px){ 
+	.newLeftBanner{width:100%; height: 230px;}
+	.navtab{ justify-content: center;padding: 20px 0;}
+	.navtab span{font-size: 16px;}
+	.newsIndex{flex-wrap: wrap;}
+	.newsIndex .left,.newsIndex .right{width: 100%;}
+	.newslist li{margin-bottom: 20px;}
+	.newslist li .time{width: 20%;}
+	.newslist li .infor{width:75%;}
+	.newslist li .day{font-size: 30px; line-height: 40px;}
+	.newslist li .data{font-size: 13px;}
+	.newslist li .infor .tit{font-size: 15px;padding-bottom: 10px;padding-top: 5px;}
+	
+	.all-pages a,.all-pages span{ padding:0 10px; height:28px;font-size:12px; line-height:28px;}
+}
+
+</style>
+
+</html>

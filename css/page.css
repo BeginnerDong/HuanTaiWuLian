@@ -1,0 +1,56 @@
+@charset "UTF-8";
+/**
+ * 
+ * @authors Your Name (you@example.org)
+ * @date    2019-10-12 10:19:16
+ * @version $Id$
+ */
+
+.pubHeader{width:100%;}
+.pubHeadBanner{width:100%;height: 400px;}
+
+
+/* 更多按钮*/
+.MdMorebtn{padding:100px 0;}
+.MdMorebtn a{width: 150px; height: 50px; border-radius: 8px; text-align: center; color: #0d6fb8; border: 2px solid #0d6fb8; display: block; margin: 0 auto; line-height: 50px; font-size: 18px;}
+
+.topSamllBan .bjPic{width: 100%; height: auto;}
+
+/* 页面顶部索引小导航 */
+.page_crumbNav{ flex-wrap: wrap;}
+
+
+/* 返回按钮 */
+.backBtn{width: 100px; height: 36px;text-align: center; line-height: 36px; color: #999;border: 1px solid #EEE; display: block;}
+.backBtn:hover{background: #149ce7; color: #fff;border-color: #149ce7;}
+
+
+/******************* 以下自适应样式 *******************/
+@media screen and ( max-width: 1200px){
+	.w1200{ width: 90%!important; box-sizing:border-box; padding: 0 10px}
+}
+@media screen and ( max-width: 1000px){ 
+	.w1200{ width: 100%!important;}
+	.indNavbar .logo{ width: auto; height: 40px;}
+	/* .pubHeader{ height: 80px;} */
+	.pubHeadBanner{width:100%;height: 300px;}
+	.MdMorebtn{ padding: 70px 0}
+}
+
+
+@media screen and ( max-width:750px){ 
+	.pubHeadBanner{width:100%;height:200px;}
+	#banner_app .arrowIon{ display: none;}
+	
+	.topSamllBan .bjPic{height: 120px;}
+	.index_employ .bjPic{height: 150px;}
+	
+	body{ padding-top: 61px;}
+	.pdb60{ padding-bottom: 20px;}
+}
+
+@media screen and ( max-width:500px){ 
+	.pubHeadBanner{width:100%;height:150px;}
+}
+
+

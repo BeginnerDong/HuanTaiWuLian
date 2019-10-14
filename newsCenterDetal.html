@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="renderer" content="webkit">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+		<title>新闻中心</title>
+		<link type="text/css" rel="stylesheet" href="css/public.css">
+		<link type="text/css" rel="stylesheet" href="font/iconfont.css">
+		<link rel="stylesheet" type="text/css" href="css/page.css">
+		<link rel="stylesheet" type="text/css" href="css/mainInFor.css">
+		<script src="./js/vue.js"></script>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/include.js"></script>
+		<script type="text/javascript" src="js/base.js"></script>
+	</head>
+
+	<body>
+		<div id="app">
+			<!-- 网站导航 -->
+			<div class="pubHeader">
+				<include src="header.html"></include>
+			</div>
+
+			<div class="pr topSamllBan">
+				<img class="bjPic" src="images/new-banner.jpg" alt="">
+			</div>
+			
+			<!-- 网站页面导航 -->
+			<div class="borderB1 pdtb10">
+				<div class="w1200 flex color6 page_crumbNav">
+					<img src="images/vproductCenter-icon2.png" >
+					<a class="mglr10">首页</a>/<a href="#" class="mglr10">新闻中心</a>/<a href="#" class="mglr10">公司新闻</a>/<span class="mglr10 pubcolor">浙勤集团党委书记董事长徐德良莅临海亮集团考察交流</span>
+				</div>
+			</div>
+			
+			<div class="pr">
+				<div class="w1200 oh">
+					<div class="main-rightCont fl pdb40" style="padding-top: 30px; min-height: 500px;">
+						<div class="mainXqTit center">
+							<span class="tit fs20">浙勤集团党委书记董事长徐德良莅临海亮集团考察交流</span>
+						</div>
+						<div class="flexRowBetween line40 pdlr10 bjgayf5">
+							<div class="FS12 color6">发布时间：2019-10-14</div>
+							<div>
+								<div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
+							</div>
+						</div>
+						<div class="mainXqInfor color6 pdb40">
+							<img src="images/new-img2.jpg" alt="">
+							<p class="em2">能源投资：紧随能源发展和改革趋势，中康电力2017年将全面转向分布式电站开发投资业务，目前已经完成在苏州、常州、张家港、阳泉等地布局，能源投资：紧随能源发展和改革趋势，中康电力2017年将全面转向分布式电站开发投资业务，目前已经完成在苏州、常州、张家港、阳泉等地布局，能源投资：紧随能源发展和改革趋势，中康电力2017年将全面转向分布式电站开发投资业务，目前已经完成在苏州、常州、张家港、阳泉等地布局。</p>
+							<p>能源投资：紧随能源发展和改革趋势，中康电力2017年将全面转向分布式电站开发投资业务，目前已经完成在苏州、常州、张家港、阳泉等地布局。</p>
+						</div>
+						
+						<div class="articleTit_lis flexRowBetween">
+							<div class="leftInfor flexColumn color6">
+								<a class="color6" href="#">上一篇：海亮爱心助成才，圆梦大学十三载</a>
+								<a class="color6" href="#">下一篇：浙江民营企业百强榜出炉，海亮集团登第三</a>
+							</div>
+							<div class="right">
+								<a class="line36 backBtn" href="javascript:history.go(-1);">返回</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="newsXq_pageNav">
+					<h1 class="title white">新闻推荐</h1>
+					<div class="infor">
+						<ul>
+							<li v-for="(item,index) in newXqNavData" :key="index">
+								<a href="#">
+									<h2 class="tt avoidOverflow">浙江民营企业百强榜出炉。海亮集团海亮集团海亮集团</h2>
+									<p class="time fs12 color9">2019/10/14</p>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			
+			<include src="footer.html"></include>
+		</div>
+	</body>
+<script>
+	// 分享新浪等网站按钮
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+<script type="text/javascript">
+		var app = new Vue({
+			el: '#app',
+			data: function() {
+				return {
+					is_toggle: false,
+					mainData:[],
+					newXqNavData:[
+						{},{},{},{},{},{}
+					]
+				}
+			},
+			created: function() {
+				var self = this;
+				window.onload = function() {
+				};
+				self.getMainData()
+
+			},
+			methods: {
+				goDetail(id){
+					window.base.location
+				},
+				getMainData: function(id) {
+					var self = this;
+					var callback = function(res) {
+						console.log('getMainData', res);
+						self.mainData.push.apply(self.mainData, res.info.data);
+						for (var i = 0; i < self.mainData.length; i++) {
+							self[self.mainData[i].title] = self.mainData[i];
+						};
+					};
+					console.log('self.mainData', self.mainData)
+				}
+			}
+		});
+	</script>
+<style>
+	
+.newsXq_pageNav{ width: 300px; position: absolute; right: 0; top:85px; z-index: 10; background: #fff;}
+.newsXq_pageNav .title{background: #149ce7;padding: 0 10px;box-sizing: border-box; line-height: 44px; }
+.newsXq_pageNav .infor{max-height: 420px;overflow-y: auto;}
+.newsXq_pageNav li{padding: 15px 35px 10px 10px; border-bottom: 1px solid #eee;}
+.newsXq_pageNav li a{width: 100%; height: 100%; display: block;}
+.newsXq_pageNav li .tt{margin-bottom: 10xp;}
+.newsXq_pageNav li:hover{background: #F5F5F5;}
+.newsXq_pageNav li:hover .tt{color: #149ce7;}
+
+
+.articleTit_lis .leftInfor{ align-items: flex-start; }
+.articleTit_lis .leftInfor a{line-height: 30px;}
+
+
+
+
+@media screen and ( max-width:750px){ 
+	.mainXqInfor{padding-bottom: 20px;}
+	.articleTit_lis{ flex-wrap: wrap;}
+	.articleTit_lis .right{width: 100%;}
+	.backBtn{margin: 20px auto 0 auto;}
+	
+.newsXq_pageNav{width: 96%; margin: 0 auto;position: initial; top: auto;right: auto; margin-bottom: 30px;}
+}
+</style>
+
+</html>

@@ -1,0 +1,61 @@
+@charset "UTF-8";
+
+/*公共标题*/
+.pubTitle{ padding-top:40px; padding-bottom: 30px;}
+.pubTitle h1{ font-size: 26px; line-height:26px;}
+.pubTitle p{ font-size: 16px;text-transform:uppercase;padding-bottom: 10px;}
+/*公共标题*/
+
+
+/* 核心产品 */
+.indx-sharebox ul{display: flex; justify-content: space-around; flex-wrap: nowrap;}
+.indx-sharebox li{ width: 20%;}
+.indx-sharebox li .icon{  width: 70px; height: 70px; display: block;margin: 0 auto;}
+.indx-sharebox li h1{ font-size: 18px;padding-top: 30px; line-height: 40px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;}
+.indx-sharebox li p{ font-size: 13px;  padding-top: 10px;}
+
+/* 典型案例 */
+.index_casePic{}
+.index_casePic>div .text{position: absolute; bottom: 0;left: 0; width: 100%; line-height: 40px;padding: 0 10px;box-sizing: border-box;background:rgba(0,0,0,0.5); color: #fff;}
+.index_casePic>div img{width: 100%; height: 100%; transition: all 2s;}
+.index_casePic>div img:hover{ transform: scale(1.1);}
+.index_casePic .onePic{ width: 751px; height: 432px; margin-right: 10px;}
+.index_casePic .onePic .text{line-height: 50px;}
+.index_casePic .twoPic .item{width: 363px; height: 211px;}
+.index_casePic .twoPic .item:first-child{margin-bottom: 10px;}
+
+/* 环太聘 */
+.index_employ .bjPic{ width: 100%; height: 260px; display: block;}
+.index_employ .cont{position: absolute; left: 50%; top: 50%;transform: translate(-50%,-50%); width: 100%;}
+.index_employ .Ltit{width: 102px; height: 102px; display: block; margin-right: 15px;}
+.index_employ .Rlink:hover{ color: #75d7ff;}
+
+/****************** 首页end ******************/
+
+@media screen and ( max-width:750px){ 
+	
+	.pubTitle{ padding: 30px 0 10px 0;}
+	.pubTitle h1{ font-size: 18px; }
+	.pubTitle p{ font-size: 14px;padding-bottom: 0;}
+	
+	/* 核心产品 */
+	.indx-sharebox ul{display: flex; justify-content: space-around; flex-wrap: wrap;}
+	.indx-sharebox li{ width: 46%; padding-bottom: 30px;}
+	.indx-sharebox li .icon{  width: 40px; height: 40px;}
+	.indx-sharebox li h1{ font-size:15px;padding:15px 0 5px 0; line-height: 30px;}
+	.indx-sharebox li p{ font-size: 12px;padding-top: 0px;}
+	
+	.index_casePic{ flex-wrap: wrap;}
+	.index_casePic .onePic{width: 100%; height: auto; margin-right: 0; margin-bottom: 10px;}
+	.index_casePic .twoPic .item{width: 100%; height: auto;}
+	
+	.index_employ .Ltit{width: 55px; height: 55px;}
+	.index_employ .cont .flex{justify-content: center;}
+	.index_employ .text { font-size: 15px; margin-top: 0; line-height: 24px;}
+	.index_employ .cont .flexEnd{ justify-content: center; margin-top: 20px;}
+	.index_employ .cont .flexEnd .Rlink{ font-size: 14px;}
+		
+	
+}
+
+

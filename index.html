@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="renderer" content="webkit">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+		<title>环太物联</title>
+		<link type="text/css" rel="stylesheet" href="css/public.css">
+		<link type="text/css" rel="stylesheet" href="font/iconfont.css">
+		<link rel="stylesheet" type="text/css" href="css/page.css">
+		<link rel="stylesheet" type="text/css" href="css/index.css">
+		<script src="./js/vue.js"></script>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/include.js"></script>
+		<script type="text/javascript" src="js/base.js"></script>	
+	</head>
+
+	<body>
+		<div id="app">
+			<!-- 网站导航 -->
+			<div class="pubHeader">
+				<include src="header.html"></include>
+			</div>
+
+			<div class="pubHeadBanner">
+				<include src="headBanner.html"></include>
+			</div>
+
+			<!-- 核心产品 -->
+			<div class="pdb60 indx-sharebox center white" style="background-image: linear-gradient(to right, #37b9f0 , #2187de);">
+				<div class="pubTitle center">
+					<p>Core product</p>
+					<h1 class="mgb20">核心产品</h1>
+				</div>
+				<div class="w1200">
+					<ul>
+						<li v-for="(item,index) in indshareLis" :key="index">
+							<img class="icon" :src="item.iconUrl" alt="">
+							<h1>{{item.title}}</h1>
+							<p>{{item.text}}</p>
+						</li>
+					</ul>
+				</div>
+			</div>
+			
+			<!-- 典型案例 -->
+			<div class="bjgayf5 pdb60">
+				<div class="w1200">
+					<div class="pubTitle flexRowBetween mg0" style="width: 94%;">
+						<div class="flex">
+							<h1 class="fs26">典型案例</h1>
+							<p class="fs14 mgt10 mgl10" style="padding-bottom: 0;">classic case</p>
+						</div>
+						<a class="moreTexwrap flexEnd fs14">MORE&gt;</a>
+					</div>
+				
+					<div class="index_casePic flexCenter">
+						<div class="onePic pr oh">
+							<a href="proCenter.html">
+								<img src="images/case-img.jpg" alt="">
+								<p class="text avoidOverflow">汉中市天汉文化公园能源监测管理系统</p>
+							</a>
+						</div>
+						<div class="twoPic">
+							<div class="item pr oh">
+								<a href="proCenter.html">
+									<img src="images/home-img1.jpg" alt="">
+									<p class="text avoidOverflow">陕西职业技术学校能源监测</p>
+								</a>
+							</div>
+							<div class="item pr oh">
+								<a href="proCenter.html">
+									<img src="images/home-img2.jpg" alt="">
+									<p class="text avoidOverflow">拜将台智慧照明管理系统管理</p>
+								</a>	
+							</div>
+						</div>
+					</div>
+					<div class="mgt10 center">我们凭借雄厚的技术积淀、专业的解决方案、健全的服务网络以及丰富的产品和厂方资源。成为备受推崇的供应商和值得信赖的合作伙伴。</div>
+				</div>
+			</div>
+			
+			<!-- 合作流程 -->
+			<div class="index_hezuo pdb60">
+				<div class="pubTitle center">
+					<h1 class="mgb10">合作流程</h1>
+					<p class="color9">强强联合，共享物联网发展红利</p>
+				</div>
+				<div class="w1200"><img class="w" src="images/home-img3.jpg" ></div>
+			</div>
+			<div class="pr index_employ">
+				<img class="bjPic" src="images/home-img4.jpg" alt="">
+				<div class="cont">
+					<div class="w1200">
+						<div class="white flex">
+							<img class="Ltit" src="images/home-img4.1.png" alt="">
+							<div class="text mgt20 fs18 line30">
+								<p>Pecruitment notices</p>
+								<p>环太因你而美好</p>
+							</div>
+						</div>
+						<div class="flexEnd mgt10">
+							<a class="white Rlink fs16" href="#">查看全部在招聘职位&nbsp;&gt;</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="pdb60 w1200">
+				<div class="pubTitle center fs20">
+					<h1 class="">物联共生 合作共赢</h1>
+				</div>
+				<div class="">
+					<img class="w" src="images/home-img5.jpg" alt="">
+				</div>
+			</div>
+			
+			<include src="footer.html"></include>
+		</div>
+	</body>
+
+	<script type="text/javascript">
+		var app = new Vue({
+			el: '#app',
+			data: function() {
+				return {
+					is_toggle: false,
+					indshareLis: [
+						{
+							iconUrl: "images/home-icon.png",
+							title: "智慧能源监测管理平台",
+							text: "该系统主要面向政府企业实业单位，高校、工业园区定制开发，采集各项功能数据，并通过大量数据模型，辅助决策..."
+						},
+						{
+							iconUrl: "images/home-icon1.png",
+							title: "智慧油烟监测平台",
+							text: "该系统主要面向政府企业实业单位，高校、工业园区定制开发，采集各项功能数据，并通过大量数据模型，辅助决策..."
+						},
+						{
+							iconUrl: "images/home-icon2.png",
+							title: "电器火灾远程监测平台",
+							text: "该系统主要面向政府企业实业单位，高校、工业园区定制开发，采集各项功能数据，并通过大量数据模型，辅助决策..."
+						},
+						{
+							iconUrl: "images/home-icon3.png",
+							title: "Air Lamp 物联网智慧照明",
+							text: "该系统主要面向政府企业实业单位，高校、工业园区定制开发，采集各项功能数据，并通过大量数据模型，辅助决策..."
+						}
+					],
+					teacherData:[
+						{mainImg:'images/home-banner.jpg'},
+						{mainImg:'images/home-banner.jpg'}
+					],
+					mainData:[]
+				}
+			},
+			created: function() {
+				var self = this;
+				window.onload = function() {
+
+					/* window.base.bus.$emit('to_contentOne', {
+						paginate: self.paginate
+					}); */
+					window.base.bus.$emit('to_headBanner', {
+						title:'首页轮播图'
+					});	
+					//window.base.bus.$emit('to_swiper',{mainData:self.teacherData});
+
+				};
+				self.getMainData()
+
+			},
+			methods: {
+				
+				goDetail(id){
+					window.base.location
+				},
+
+				getMainData: function(id) {
+					var self = this;
+					var callback = function(res) {
+						console.log('getMainData', res);
+						self.mainData.push.apply(self.mainData, res.info.data);
+						for (var i = 0; i < self.mainData.length; i++) {
+							self[self.mainData[i].title] = self.mainData[i];
+						};
+						console.log(self['企业公告'])
+					};
+					console.log('self.mainData', self.mainData)
+				},
+
+
+			}
+		});
+	</script>
+
+
+</html>

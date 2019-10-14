@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="renderer" content="webkit">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+		<title>精品案例</title>
+		<link type="text/css" rel="stylesheet" href="css/public.css">
+		<link type="text/css" rel="stylesheet" href="font/iconfont.css">
+		<link rel="stylesheet" type="text/css" href="css/page.css">
+		<script src="./js/vue.js"></script>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/include.js"></script>
+		<script type="text/javascript" src="js/base.js"></script>
+	</head>
+
+	<body>
+		<div id="app">
+			<!-- 网站导航 -->
+			<div class="pubHeader">
+				<include src="header.html"></include>
+			</div>
+
+			<div class="topSamllBan">
+				<img class="bjPic" src="images/product center-banner.jpg" alt="">
+			</div>
+			
+			<!-- 网站页面导航 -->
+			<div class="borderB1 pdtb10">
+				<div class="w1200 flex color6">
+					<img src="images/vproductCenter-icon2.png" >
+					<span class="mglr10">首页</span>/<span class="mglr10 pubcolor">精品案例</span>
+				</div>
+			</div>
+			<div class="w1200 oh">
+				<div class="pr flex">
+					<div class="anliLit mgtb30">智能能源案例</div>
+					<div class="xian"></div>
+				</div>
+				<div class="caseList">
+					<ul>
+						<li>
+							<a href="proCenter.html">
+								<div class="pic">
+									<img src="images/case-img.jpg"/>
+								</div>
+								<p class="flex tit color6 "><em class="avoidOverflow2">汉中市天汉文化公园-能源蓝翔管理系统</em></p>
+							</a>
+						</li>
+						<li>
+							<a href="proCenter.html">
+								<div class="pic">
+									<img src="images/case-img1.jpg"/>
+								</div>
+								<p class="flex tit color6 "><em class="avoidOverflow2">汉中市天汉文化公园-能源蓝翔管理系统</em></p>
+							</a>
+						</li>
+						<li>
+							<a href="proCenter.html">
+								<div class="pic">
+									<img src="images/case-img2.jpg"/>
+								</div>
+								<p class="flex tit color6 "><em class="avoidOverflow2">汉中市天汉文化公园-能源蓝翔管理系统</em></p>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<div class="pr flex">
+					<div class="anliLit mgtb30">油烟监测案例</div>
+					<div class="xian"></div>
+				</div>
+				<div class="caseList">
+					<ul>
+						<li>
+							<a href="proCenter.html">
+								<div class="pic">
+									<img src="images/case-img3.jpg"/>
+								</div>
+								<p class="flex tit color6 "><em class="avoidOverflow2">汉中市天汉文化公园-能源蓝翔管理系统</em></p>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			
+			<include src="footer.html"></include>
+		</div>
+	</body>
+
+	<script type="text/javascript">
+		var app = new Vue({
+			el: '#app',
+			data: function() {
+				return {
+					is_toggle: false,
+					mainData:[],
+					leftNavData:['智慧能源监控管理平台','智慧照明管理系统','智慧油烟在线监测管理系统','电器火灾远程监测预警系统'],
+					current:0
+				}
+			},
+			created: function() {
+				var self = this;
+				window.onload = function() {
+
+					/* window.base.bus.$emit('to_contentOne', {
+						paginate: self.paginate
+					}); */
+					//window.base.bus.$emit('to_swiper',{mainData:self.teacherData});
+
+				};
+				self.getMainData()
+
+			},
+			methods: {
+				change(index){
+					var self = this;
+					self.current = index
+				},
+				goDetail(id){
+					window.base.location
+				},
+				getMainData: function(id) {
+					var self = this;
+					var callback = function(res) {
+						console.log('getMainData', res);
+						self.mainData.push.apply(self.mainData, res.info.data);
+						for (var i = 0; i < self.mainData.length; i++) {
+							self[self.mainData[i].title] = self.mainData[i];
+						};
+					};
+					console.log('self.mainData', self.mainData)
+				},
+
+
+			}
+		});
+	</script>
+<style>
+html{ background: #F5F5F5;}
+.xian{ width: 100%; height: 1px; background: #EEEEEE; position: absolute; top: 50%;left: 0; transform: translateY(-50%); z-index: 0;}
+.anliLit{line-height: 18px;padding-left: 10px; padding-right: 10px;border-left:5px solid #0071C5;font-size: 18px; background: #F5F5F5;  position: relative; background: #F5F5F5;z-index: 1;}
+
+.caseList ul{ display: flex;flex-wrap: wrap;}
+.caseList li{width:32%; height: 330px; margin-right: 2%;background: #fff; margin-bottom: 30px; overflow: hidden;}
+.caseList li:nth-of-type(3n){margin-right: 0;}
+.caseList li .pic{width: 100%; height:80%; overflow: hidden; }
+.caseList li .pic img{width: 100%; height: 100%;transition: all 2s; display: block;}
+.caseList li .tit{margin: 10px;box-sizing: border-box; height:44px;}
+.caseList li .pic:hover img{ transform: scale(1.1);}
+.caseList li:hover  .tit{ color: #0071C5;}
+
+@media screen and ( max-width:1100px){
+	.caseList li{height: 254px;}
+	.caseList li .pic{height: 68%;}
+}
+
+@media screen and ( max-width:500px){
+	.anliLit{margin: 20px 0;}
+	.caseList li{width: 49%; height: 206px;}
+	.caseList li:nth-of-type(2n){margin-right: 0;}
+	.caseList li:nth-of-type(3n){margin-right:inherit;}
+}
+
+
+</style>
+
+</html>
