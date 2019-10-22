@@ -33,7 +33,8 @@
 			<div class="borderB1 pdtb10">
 				<div class="w1200 flex color6 page_crumbNav">
 					<img src="images/vproductCenter-icon2.png" >
-					<a class="mglr10">首页</a>/<a href="#" class="mglr10">新闻中心</a>/<a href="#" class="mglr10">公司新闻</a>/<span class="mglr10 pubcolor">浙勤集团党委书记董事长徐德良莅临海亮集团考察交流</span>
+					<a class="mglr10" href="index.html">首页</a>/<a href="newsCenter.html" class="mglr10">新闻中心</a>/
+					<a href="#" class="mglr10">{{mainData.label&&mainData.label[mainData.menu_id]?mainData.label[mainData.menu_id].title:''}}</a>/<span class="mglr10 pubcolor">{{mainData.title}}</span>
 				</div>
 			</div>
 			
@@ -41,24 +42,24 @@
 				<div class="w1200 oh">
 					<div class="main-rightCont fl pdb40" style="padding-top: 30px; min-height: 500px;">
 						<div class="mainXqTit center">
-							<span class="tit fs20">浙勤集团党委书记董事长徐德良莅临海亮集团考察交流</span>
+							<span class="tit fs20">{{mainData.title}}</span>
 						</div>
 						<div class="flexRowBetween line40 pdlr10 bjgayf5">
-							<div class="FS12 color6">发布时间：2019-10-14</div>
+							<div class="FS12 color6">发布时间：{{mainData.create_time}}</div>
 							<div>
 								<div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
 							</div>
 						</div>
 						<div class="mainXqInfor color6 pdb40">
-							<img src="images/new-img2.jpg" alt="">
-							<p class="em2">能源投资：紧随能源发展和改革趋势，中康电力2017年将全面转向分布式电站开发投资业务，目前已经完成在苏州、常州、张家港、阳泉等地布局，能源投资：紧随能源发展和改革趋势，中康电力2017年将全面转向分布式电站开发投资业务，目前已经完成在苏州、常州、张家港、阳泉等地布局，能源投资：紧随能源发展和改革趋势，中康电力2017年将全面转向分布式电站开发投资业务，目前已经完成在苏州、常州、张家港、阳泉等地布局。</p>
-							<p>能源投资：紧随能源发展和改革趋势，中康电力2017年将全面转向分布式电站开发投资业务，目前已经完成在苏州、常州、张家港、阳泉等地布局。</p>
+							<div class="content ql-editor " style="clear: both;">
+								<p class="p1 " v-html="mainData.content"></p>
+							</div>
 						</div>
 						
 						<div class="articleTit_lis flexRowBetween">
 							<div class="leftInfor flexColumn color6">
-								<a class="color6" href="#">上一篇：海亮爱心助成才，圆梦大学十三载</a>
-								<a class="color6" href="#">下一篇：浙江民营企业百强榜出炉，海亮集团登第三</a>
+								<a class="color6" @click="goDetail(preData.id)">上一篇：{{preData.title?preData.title:'没有上一篇了'}}</a>
+								<a class="color6"  @click="goDetail(nextData.id)">下一篇：{{nextData.title?nextData.title:'没有下一篇了'}}</a>
 							</div>
 							<div class="right">
 								<a class="line36 backBtn" href="javascript:history.go(-1);">返回</a>
@@ -70,10 +71,10 @@
 					<h1 class="title white">新闻推荐</h1>
 					<div class="infor">
 						<ul>
-							<li v-for="(item,index) in newXqNavData" :key="index">
-								<a href="#">
-									<h2 class="tt avoidOverflow">浙江民营企业百强榜出炉。海亮集团海亮集团海亮集团</h2>
-									<p class="time fs12 color9">2019/10/14</p>
+							<li v-for="(item,index) in newsData" :key="index">
+								<a @click="goDetail(item.id)">
+									<h2 class="tt avoidOverflow">{{item.title}}</h2>
+									<p class="time fs12 color9">{{item.create_time}}</p>
 								</a>
 							</li>
 						</ul>
@@ -94,34 +95,172 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdPic
 			data: function() {
 				return {
 					is_toggle: false,
-					mainData:[],
+					mainData:{},
 					newXqNavData:[
 						{},{},{},{},{},{}
-					]
+					],
+					newsLabelData:[],
+					newsData:[],
+					newsId:[],
+					nextData:{},
+					preData:{}
 				}
 			},
 			created: function() {
 				var self = this;
 				window.onload = function() {
 				};
+				self.id = window.base.GetRequest().id;
+				self.getNewsLabelData()
 				self.getMainData()
-
 			},
 			methods: {
+				
 				goDetail(id){
-					window.base.location
+					const self = this;
+					console.log(id)
+					
+					if(id&&id!=undefined&&id!='undefined'){
+						self.id = id;
+						self.getMainData()
+					}else{
+						alert('找不到这条新闻了！')
+					}	
 				},
+				
 				getMainData: function(id) {
 					var self = this;
-					var callback = function(res) {
-						console.log('getMainData', res);
-						self.mainData.push.apply(self.mainData, res.info.data);
-						for (var i = 0; i < self.mainData.length; i++) {
-							self[self.mainData[i].title] = self.mainData[i];
-						};
+					var postData = {};
+					postData.searchItem = {
+						thirdapp_id:2
 					};
-					console.log('self.mainData', self.mainData)
-				}
+					postData.searchItem.id = self.id;			
+					var callback = (res) => {
+						if(res.info.data.length>0){
+							console.log('getMainData', res);
+							self.mainData = res.info.data[0];
+							self.mainData.create_time = self.mainData.create_time.substr(0,10);
+							self.getNextArticle();
+							self.getPreArticle()
+						}else{
+							alert('找不到这条新闻了！')
+						}
+					};
+					window.base.articleList(postData, callback);
+				},
+				
+				getNextArticle: function(id) {
+					var self = this;
+					var postData = {};
+					postData.searchItem = {
+						thirdapp_id:2,
+						menu_id:self.mainData.menu_id
+					};
+					postData.searchItem.id = ['>',self.id];	
+					postData.paginate = {
+						count: 0,
+						currentPage: 1,
+						pagesize:1,
+						is_page: true,
+					}
+					var callback = (res) => {
+						if(res.info.data.length>0){
+							console.log('getMainData', res);
+							self.nextData = res.info.data[0];
+							self.nextData.create_time = self.nextData.create_time.substr(0,10);
+						}else{
+							self.nextData = {}
+						}
+					};
+					window.base.articleList(postData, callback);
+				},
+				
+				getPreArticle: function(id) {
+					var self = this;
+					var postData = {};
+					postData.searchItem = {
+						thirdapp_id:2,
+						menu_id:self.mainData.menu_id
+					};
+					postData.searchItem.id = ['<',self.id];	
+					postData.paginate = {
+						count: 0,
+						currentPage: 1,
+						pagesize:1,
+						is_page: true,
+					}
+					var callback = (res) => {
+						if(res.info.data.length>0){
+							console.log('getMainData', res);
+							self.preData = res.info.data[0];
+							self.preData.create_time = self.preData.create_time.substr(0,10);
+						}else{
+							self.preData = {}
+						}
+					};
+					window.base.articleList(postData, callback);
+				},
+				
+				
+				getNewsLabelData() {
+					const self = this;
+					const postData = {};
+					postData.searchItem = {
+						thirdapp_id: 2
+					};
+					postData.getBefore = {
+						newsData: {
+							tableName: 'Label',
+							searchItem: {
+								title: ['=', ['新闻中心']],
+							},
+							middleKey: 'parentid',
+							key: 'id',
+							condition: 'in',
+						},
+					};
+					const callback = (res) => {
+						if (res.info.data.length > 0) {
+							self.newsLabelData.push.apply(self.newsLabelData,res.info.data)
+							for (var i = 0; i < self.newsLabelData.length; i++) {
+								self.newsId.push(self.newsLabelData[i].id)
+							}
+							self.getNewsData()
+							console.log(self.newsId)
+						} 
+					};
+					window.base.labelGet(postData, callback);
+				},
+				
+				getNewsData() {
+					const self = this;
+					const postData = {};
+					postData.searchItem = {
+						thirdapp_id: 2,
+						menu_id:['in',self.newsId]
+					};	
+					postData.paginate={
+						count: 0,
+						currentPage: 1,
+						pagesize: 6,
+						is_page: true,
+					},
+					postData.order={
+						listorder:'desc'
+					}
+					const callback = (res) => {
+						if (res.info.data.length > 0) {
+							self.newsData.push.apply(self.newsData,res.info.data);
+							for (var i = 0; i < self.newsData.length; i++) {
+								self.newsData[i].create_time = self.newsData[i].create_time.substr(0,10)
+							}
+						} 
+						console.log('self.newsData',self.newsData)
+					};
+					window.base.articleGet(postData, callback);
+				},
+				
+				
 			}
 		});
 	</script>

@@ -1,7 +1,7 @@
 <div id="banner_app" style="">
 	<div class="banner clearfix pr" v-for="(item,index) in bannerData" v-show="index==banner_index" style="height:100%">
-		<a href="newsCenterDetal.html">
-			<img :src="item.banImgUrl" />
+		<a :href="'newsCenterDetal.html?id='+item.id">
+			<img :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" />
 			<p class="text avoidOverflow">{{item.title}}</p>
 		</a>
 		
@@ -31,8 +31,7 @@
 	        	is_toggle:false,
 				is_show:false,
 				bannerData:[
-					{banImgUrl:"images/new-img2.jpg",title:'浙勤集团党委书记董事长徐德良莅临海亮集团考察交流'},
-					{banImgUrl:"images/home-img2.jpg",title:'中康电力2017年将全面转向分布式电站开发投资业务，目前已经完成在苏州、常州、张家港、阳泉等地布局'},
+					
 				],
 				searchItem:{
 					thirdapp_id:window.base.thirdapp_id,
@@ -53,15 +52,10 @@
 			};
 			
 
-    		window.base.bus.$on('to_headBanner',(res)=>{	
-				if(res.mainImg){
-					 self.bannerData = res.mainImg
-					 return
-				};
-				console.log('res222',res)
-				this.searchItem.title = res.title;
+    		window.base.bus.$on('to_newBanner',(res)=>{	
 				
-	        	this.to_headBanner()
+				console.log('res222',res)
+				this.bannerData = res.bannerData;
 		    });
 			
 			self.bannerTimer = setInterval(function(){

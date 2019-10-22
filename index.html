@@ -38,9 +38,9 @@
 				<div class="w1200">
 					<ul>
 						<li v-for="(item,index) in indshareLis" :key="index">
-							<img class="icon" :src="item.iconUrl" alt="">
+							<img class="icon" :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" alt="">
 							<h1>{{item.title}}</h1>
-							<p>{{item.text}}</p>
+							<p>{{item.description}}</p>
 						</li>
 					</ul>
 				</div>
@@ -54,27 +54,27 @@
 							<h1 class="fs26">典型案例</h1>
 							<p class="fs14 mgt10 mgl10" style="padding-bottom: 0;">classic case</p>
 						</div>
-						<a class="moreTexwrap flexEnd fs14">MORE&gt;</a>
+						<a href="caseList.html" class="moreTexwrap flexEnd fs14">MORE&gt;</a>
 					</div>
 				
 					<div class="index_casePic flexCenter">
-						<div class="onePic pr oh">
-							<a href="proCenter.html">
-								<img src="images/case-img.jpg" alt="">
-								<p class="text avoidOverflow">汉中市天汉文化公园能源监测管理系统</p>
+						<div class="onePic pr oh" v-if="caseData[0]">
+							<a :href="'caseList.html?id='+caseData[0].id">
+								<img :src="caseData&&caseData[0]&&caseData[0].mainImg&&caseData[0].mainImg[0]?caseData[0].mainImg[0].url:''" alt="">
+								<p class="text avoidOverflow">{{caseData&&caseData[0]?caseData[0].title:''}}</p>
 							</a>
 						</div>
 						<div class="twoPic">
-							<div class="item pr oh">
-								<a href="proCenter.html">
-									<img src="images/home-img1.jpg" alt="">
-									<p class="text avoidOverflow">陕西职业技术学校能源监测</p>
+							<div class="item pr oh" v-if="caseData[1]">
+								<a :href="'caseList.html?id='+caseData[1].id">
+									<img :src="caseData&&caseData[1]&&caseData[1].mainImg&&caseData[1].mainImg[0]?caseData[1].mainImg[0].url:''" alt="">
+									<p class="text avoidOverflow">{{caseData&&caseData[1]?caseData[1].title:''}}</p>
 								</a>
 							</div>
-							<div class="item pr oh">
-								<a href="proCenter.html">
-									<img src="images/home-img2.jpg" alt="">
-									<p class="text avoidOverflow">拜将台智慧照明管理系统管理</p>
+							<div class="item pr oh" v-if="caseData[2]">
+								<a :href="'caseList.html?id='+caseData[2].id">
+									<img :src="caseData&&caseData[2]&&caseData[2].mainImg&&caseData[2].mainImg[0]?caseData[2].mainImg[0].url:''" alt="">
+									<p class="text avoidOverflow">{{caseData&&caseData[2]?caseData[2].title:''}}</p>
 								</a>	
 							</div>
 						</div>
@@ -89,7 +89,7 @@
 					<h1 class="mgb10">合作流程</h1>
 					<p class="color9">强强联合，共享物联网发展红利</p>
 				</div>
-				<div class="w1200"><img class="w" src="images/home-img3.jpg" ></div>
+				<div class="w1200"><img class="w" :src="hezuoData.mainImg&&hezuoData.mainImg[0]?hezuoData.mainImg[0].url:''" ></div>
 			</div>
 			<div class="pr index_employ">
 				<img class="bjPic" src="images/home-img4.jpg" alt="">
@@ -128,32 +128,13 @@
 				return {
 					is_toggle: false,
 					indshareLis: [
-						{
-							iconUrl: "images/home-icon.png",
-							title: "智慧能源监测管理平台",
-							text: "该系统主要面向政府企业实业单位，高校、工业园区定制开发，采集各项功能数据，并通过大量数据模型，辅助决策..."
-						},
-						{
-							iconUrl: "images/home-icon1.png",
-							title: "智慧油烟监测平台",
-							text: "该系统主要面向政府企业实业单位，高校、工业园区定制开发，采集各项功能数据，并通过大量数据模型，辅助决策..."
-						},
-						{
-							iconUrl: "images/home-icon2.png",
-							title: "电器火灾远程监测平台",
-							text: "该系统主要面向政府企业实业单位，高校、工业园区定制开发，采集各项功能数据，并通过大量数据模型，辅助决策..."
-						},
-						{
-							iconUrl: "images/home-icon3.png",
-							title: "Air Lamp 物联网智慧照明",
-							text: "该系统主要面向政府企业实业单位，高校、工业园区定制开发，采集各项功能数据，并通过大量数据模型，辅助决策..."
-						}
+						
 					],
-					teacherData:[
-						{mainImg:'images/home-banner.jpg'},
-						{mainImg:'images/home-banner.jpg'}
-					],
-					mainData:[]
+					mainData:[],
+					caseData:[],
+					caseLabelData:[],
+					caseId:[],
+					hezuoData:{}
 				}
 			},
 			created: function() {
@@ -169,15 +150,122 @@
 					//window.base.bus.$emit('to_swiper',{mainData:self.teacherData});
 
 				};
-				self.getMainData()
-
+				//self.getMainData()
+				self.getProductData()
+				self.getCaseLabelData();
+				self.getHezuoLabelData()
 			},
 			methods: {
 				
 				goDetail(id){
 					window.base.location
 				},
-
+				
+				
+				getProductData() {
+					const self = this;
+					const postData = {};
+					postData.searchItem = {
+						thirdapp_id: 2
+					};
+					postData.getBefore = {
+						caseData: {
+							tableName: 'Label',
+							searchItem: {
+								title: ['=', ['产品中心']],
+							},
+							middleKey: 'menu_id',
+							key: 'id',
+							condition: 'in',
+						},
+					};
+					postData.paginate={
+						count: 0,
+						currentPage: 1,
+						pagesize: 4,
+						is_page: true,
+					},
+					postData.order={
+						listorder:'desc'
+					}
+					const callback = (res) => {
+						if (res.info.data.length > 0) {
+							self.indshareLis.push.apply(self.indshareLis,res.info.data)
+						} 
+					};
+					window.base.articleGet(postData, callback);
+				},
+				
+				getCaseLabelData() {
+					const self = this;
+					const postData = {};
+					postData.searchItem = {
+						thirdapp_id: 2
+					};
+					postData.getBefore = {
+						caseData: {
+							tableName: 'Label',
+							searchItem: {
+								title: ['=', ['精品案例']],
+							},
+							middleKey: 'parentid',
+							key: 'id',
+							condition: 'in',
+						},
+					};
+					const callback = (res) => {
+						if (res.info.data.length > 0) {
+							self.caseLabelData.push.apply(self.caseLabelData,res.info.data)
+							for (var i = 0; i < self.caseLabelData.length; i++) {
+								self.caseId.push(self.caseLabelData[i].id)
+							}
+							self.getCaseData()
+							console.log(self.caseId)
+						} 
+					};
+					window.base.labelGet(postData, callback);
+				},
+				
+				getHezuoLabelData() {
+					const self = this;
+					const postData = {};
+					postData.searchItem = {
+						thirdapp_id: 2,
+						title:'合作流程'
+					};
+					const callback = (res) => {
+						if (res.info.data.length > 0) {
+							self.hezuoData = res.info.data[0]		
+						} 
+					};
+					window.base.labelGet(postData, callback);
+				},
+				
+				getCaseData() {
+					const self = this;
+					const postData = {};
+					postData.searchItem = {
+						thirdapp_id: 2,
+						menu_id:['in',self.caseId]
+					};	
+					postData.paginate={
+						count: 0,
+						currentPage: 1,
+						pagesize: 3,
+						is_page: true,
+					},
+					postData.order={
+						listorder:'desc'
+					}
+					const callback = (res) => {
+						if (res.info.data.length > 0) {
+							self.caseData.push.apply(self.caseData,res.info.data)
+						} 
+						console.log('self.caseData',self.caseData)
+					};
+					window.base.articleGet(postData, callback);
+				},
+				
 				getMainData: function(id) {
 					var self = this;
 					var callback = function(res) {

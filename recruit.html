@@ -42,15 +42,15 @@
 			
 			<div class="w1200 oh recruit_index flexRowBetween mgt20 pdb40">
 				<div class="leftPic">
-					<img src="images/recruitment-img.jpg" >
+					<img :src="mainData.mainImg&&mainData.mainImg[0]?mainData.mainImg[0].url:''" >
 				</div>
 				<div class="R_Infor">
 					<H2 class="title borderB1 color5">招聘岗位</H2>
 					<div class="list">
-						<a href="recruitDetail.html" v-for="(item,index) in zhiweiDate">
-							<span class="L pubcolor">{{item.name}}</span>
-							<span class="M">{{item.address}}</span>
-							<span class="R">{{item.time}}</span>
+						<a v-for="(item,index) in mainData.article" :href="'recruitDetail.html?id='+item.id" >
+							<span class="L pubcolor">{{item.title}}</span>
+							<span class="M">{{item.description}}</span>
+							<span class="R">{{item.create_time}}</span>
 						</a>
 					</div>
 				</div>
@@ -67,7 +67,7 @@
 				return {
 					is_show:false,
 					is_toggle: false,
-					mainData:[],
+					mainData:{},
 					zhiweiDate:[
 						{name:'UI工程师',address:'杭州市',time:'2019-10-10'},
 						{name:'前端中级工程师',address:'杭州市',time:'2019-10-10'},
@@ -77,7 +77,7 @@
 						{name:'效能主管/经理',address:'滨江区',time:'2019-10-10'},
 						{name:'JAVA开发实习生',address:'西安市',time:'2019-10-10'},
 						{name:'语文教培产品研发经理',address:'杭州市',time:'2019-10-10'},
-					]
+					],
 				}
 			},
 			created: function() {
@@ -97,17 +97,41 @@
 				goDetail(id){
 					window.base.location
 				},
-				getMainData: function(id) {
-					var self = this;
-					var callback = function(res) {
-						console.log('getMainData', res);
-						self.mainData.push.apply(self.mainData, res.info.data);
-						for (var i = 0; i < self.mainData.length; i++) {
-							self[self.mainData[i].title] = self.mainData[i];
-						};
+				
+				getMainData() {
+					const self = this;
+					const postData = {};
+					postData.searchItem = {
+						thirdapp_id: 2,
+						title:'招聘英才'
 					};
-					console.log('self.mainData', self.mainData)
-				}
+					postData.getAfter = {
+						article: {
+							tableName: 'Article',
+							searchItem: {
+								status: 1
+							},
+							middleKey: 'id',
+							key: 'menu_id',
+							condition: 'in',
+							order:{
+								listorder:'desc'
+							}
+						},
+					};
+					postData.order = {
+						listorder: 'desc'
+					}
+					const callback = (res) => {
+						if (res.info.data.length > 0) {
+							self.mainData = res.info.data[0];
+							for (var i = 0; i < self.mainData.article.length; i++) {
+								self.mainData.article[i].create_time = self.mainData.article[i].create_time.substr(0,10)
+							}
+						}
+					};
+					window.base.labelGet(postData, callback);
+				},
 			}
 		});
 	</script>

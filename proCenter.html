@@ -26,15 +26,15 @@
 				<include src="header.html"></include>
 			</div>
 
-			<div class=" topSamllBan">
-				<img class="bjPic" src="images/product center-banner.jpg" alt="">
+			<div class="topSamllBan">
+				<img class="bjPic" src="images/product_center-banner.jpg" alt="">
 			</div>
 			
 			<!-- 网站页面导航 -->
 			<div class="borderB1 pdtb10">
 				<div class="w1200 flex color6 page_crumbNav">
 					<img src="images/vproductCenter-icon2.png" >
-					<a class="mglr10">首页</a>/<a class="mglr10">产品中心</a>/<span class="mglr10 pubcolor">智慧能源分析管理系统</span>
+					<a class="mglr10" href="index.html">首页</a>/<a class="mglr10">产品中心</a>/<span class="mglr10 pubcolor">{{currentPro.title}}</span>
 				</div>
 			</div>
 			<div class="w1200 oh">
@@ -44,20 +44,19 @@
 						<h1 class="tt ftw">产品中心</h1>
 					</div>
 					<div class="selnav oh">
-						<template v-for="(item,index) in leftNavData" :key="index">
+						<template v-for="(item,index) in leftNavData">
 							<a :class="current==index?'on':''" @click="change(index)" >{{item}}</a>
 						</template>
 					</div>
 				</div>
 				<div class="main-rightCont fr pdb40">
 					<div class="mainXqTit center">
-						<span class="tit fs20">智慧能源监控管理平台</span>
+						<span class="tit fs20">{{currentPro.title}}</span>
 					</div>
 					<div class="mainXqInfor color6">
-						<p class="em2">能源投资：紧随能源发展和改革趋势，中康电力2017年将全面转向分布式电站开发投资业务，目前已经完成在苏州、常州、张家港、阳泉等地布局，能源投资：紧随能源发展和改革趋势，中康电力2017年将全面转向分布式电站开发投资业务，目前已经完成在苏州、常州、张家港、阳泉等地布局，能源投资：紧随能源发展和改革趋势，中康电力2017年将全面转向分布式电站开发投资业务，目前已经完成在苏州、常州、张家港、阳泉等地布局。</p>
-						<img src="images/productCenter-img.png" alt="">
-						<p class="em2">能源投资：紧随能源发展和改革趋势，中康电力2017年将全面转向分布式电站开发投资业务，目前已经完成在苏州、常州、张家港、阳泉等地布局。</p>
-						<p class="em2">紧随能源发展和改革趋势，中康电力2017年将全面转向分布式电站开发投资业务，目前已经完成在苏州、常州、张家港、阳泉等地布局，能源投资：紧随能源发展和改革趋势，中康电力2017年将全面转向分布式电站开发投资业务，目前已经完成在苏州、常州、张家港、阳泉等地布局。</p>
+						<div class="content ql-editor " style="clear: both;">
+							<p class="p1 " v-html="currentPro.content"></p>
+						</div>
 					</div>
 				</div>
 				
@@ -76,17 +75,16 @@
 				return {
 					is_toggle: false,
 					mainData:[],
-					leftNavData:['智慧能源监控管理平台','智慧照明管理系统','智慧油烟在线监测管理系统','电器火灾远程监测预警系统'],
-					current:0
+					leftNavData:[],
+					current:0,
+					currentPro:{}
 				}
 			},
 			created: function() {
 				var self = this;
 				window.onload = function() {
 
-					/* window.base.bus.$emit('to_contentOne', {
-						paginate: self.paginate
-					}); */
+					
 					//window.base.bus.$emit('to_swiper',{mainData:self.teacherData});
 
 				};
@@ -96,21 +94,45 @@
 			methods: {
 				change(index){
 					var self = this;
-					self.current = index
+					self.current = index;
+					self.currentPro = self.mainData[index]
 				},
+				
 				goDetail(id){
 					window.base.location
 				},
-				getMainData: function(id) {
-					var self = this;
-					var callback = function(res) {
-						console.log('getMainData', res);
-						self.mainData.push.apply(self.mainData, res.info.data);
-						for (var i = 0; i < self.mainData.length; i++) {
-							self[self.mainData[i].title] = self.mainData[i];
-						};
+				
+				getMainData() {
+					const self = this;
+					const postData = {};
+					postData.searchItem = {
+						thirdapp_id: 2
 					};
-					console.log('self.mainData', self.mainData)
+					postData.getBefore = {
+						caseData: {
+							tableName: 'Label',
+							searchItem: {
+								title: ['=', ['产品中心']],
+							},
+							middleKey: 'menu_id',
+							key: 'id',
+							condition: 'in',
+						},
+					};
+					postData.order={
+						listorder:'desc'
+					}
+					const callback = (res) => {
+						if (res.info.data.length > 0) {
+							self.mainData.push.apply(self.mainData,res.info.data)
+							self.currentPro = self.mainData[0];
+							for (var i = 0; i < self.mainData.length; i++) {
+								
+								self.leftNavData.push(self.mainData[i].title)
+							}
+						} 
+					};
+					window.base.articleGet(postData, callback);
 				},
 
 

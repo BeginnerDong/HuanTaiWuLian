@@ -1,6 +1,6 @@
 <div id="banner_app" style="">
 	<div class="banner clearfix" v-for="(item,index) in bannerData" v-show="index==banner_index" style="height:100%">
-		<img :src="item.banImgUrl" />
+		<img :src="item.url" />
 	</div>
 	
 	<!-- 导航点 -->
@@ -27,8 +27,7 @@
 	        	is_toggle:false,
 				is_show:false,
 				bannerData:[
-					{banImgUrl:"images/home-banner.jpg"},
-					{banImgUrl:"images/aboutUs-img.jpg"},
+					
 				],
 				searchItem:{
 					thirdapp_id:window.base.thirdapp_id,
@@ -80,18 +79,18 @@
 				self.banner_index = index;
 			},
 			
-	   //  	to_headBanner:function(){
-				// var self = this;
-				// var postData = {};
-				// postData.searchItem = window.base.cloneForm(self.searchItem);
-				// var callback = function(res){
-				//      if(res.info.data.length>0){
-				// 		 self.bannerData =res.info.data[0].mainImg;
-				// 		 console.log('self.bannerData',self.bannerData)
-				//      };    
-				// };
-				// window.base.labelGet(postData, callback);
-	   //  	},
+	    	to_headBanner:function(){
+				var self = this;
+				var postData = {};
+				postData.searchItem = window.base.cloneForm(self.searchItem);
+				var callback = function(res){
+				     if(res.info.data.length>0){
+						 self.bannerData =res.info.data[0].mainImg;
+						 console.log('self.bannerData',self.bannerData)
+				     };    
+				};
+				window.base.labelGet(postData, callback);
+	    	},
 	        
 			// 自动轮播
 	    	changeBanner: function(type) {

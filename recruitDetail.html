@@ -29,7 +29,7 @@
 			<div class="borderB1 pdtb10">
 				<div class="w1200 flex color6 page_crumbNav">
 					<img src="images/vproductCenter-icon2.png" >
-					<a class="mglr10">首页</a>/<span class="mglr10 pubcolor">招聘英才</span>
+					<a class="mglr10">首页</a>/<a class="mglr10">招聘英才</a>/<span class="mglr10 pubcolor">{{mainData.title}}</span>
 				</div>
 			</div>
 			
@@ -39,29 +39,18 @@
 				</div>
 				<div class="bjgayf5  rctXqcontOne flexRowBetween">
 					<div class="left">
-						<h1 class="tit fs18 pubcolor">国际高中实验员</h1>
+						<h1 class="tit fs18 pubcolor">{{mainData.title}}</h1>
 						<p class="color6 fs12 mgt10">西安环太物联技术有限公司</p>
 					</div>
 					<div class="right flexColumn">
 						<span class="btn mgb10 shenqBtn center"  @click="shenqShow">申请</span>
-						<p class="fs12 color9">2019-10-14</p>
+						<p class="fs12 color9">{{mainData.create_time}}</p>
 					</div>
 				</div>
 				<div class="zhiwei_infor">
-					<h3 class="lborder_title">职位描述</h3>
-					<div class="item">
-						<p>1、根据学生所提供的信息，发掘学生特点，帮助学生进行自我定位；</p>
-						<p>2、创作申请需要的一系列申请文书；</p>
-						<p>3、根据学生所提供的信息，发掘学生特点，帮助学生进行自我定位；</p>
-						<p>4、负责帮助学生进行面试辅导；</p>
-						<p>5、认同企业文化，完成直接上级主管临时交办的人物；</p>
-					</div>
-					<h3 class="lborder_title">职位要求</h3>
-					<div class="item">
-						<p>1、本科及以上学历，一年及以上施工相关经验或软件销售经验者优先</p>
-						<p>2、专业不限，土木工程、工程管理等相关专业优先考虑；</p>
-						<p>3、较强的组织协调能力和沟通能力，具有良好主动的服务意识；</p>
-						<p>4、具备一定的抗压能力、良好的自学能力和独立解决问题的能力，有进取精神与乐观态度；</p>
+					
+					<div class="content ql-editor " style="clear: both;">
+						<p class="p1 " v-html="mainData.content"></p>
 					</div>
 				</div>
 				
@@ -118,17 +107,7 @@
 				return {
 					is_show:false,
 					is_toggle: false,
-					mainData:[],
-					zhiweiDate:[
-						{name:'UI工程师',address:'杭州市',time:'2019-10-10'},
-						{name:'前端中级工程师',address:'杭州市',time:'2019-10-10'},
-						{name:'审计主管',address:'西安市',time:'2019-10-10'},
-						{name:'宁波分公司核算主管',address:'西安市',time:'2019-10-10'},
-						{name:'核算主管',address:'宁波市',time:'2019-10-10'},
-						{name:'效能主管/经理',address:'滨江区',time:'2019-10-10'},
-						{name:'JAVA开发实习生',address:'西安市',time:'2019-10-10'},
-						{name:'语文教培产品研发经理',address:'杭州市',time:'2019-10-10'},
-					]
+					mainData:{},
 				}
 			},
 			created: function() {
@@ -143,20 +122,25 @@
 					var self = this;
 					self.is_show = !self.is_show
 				},
-				goDetail(id){
-					window.base.location
-				},
+				
 				getMainData: function(id) {
 					var self = this;
-					var callback = function(res) {
-						console.log('getMainData', res);
-						self.mainData.push.apply(self.mainData, res.info.data);
-						for (var i = 0; i < self.mainData.length; i++) {
-							self[self.mainData[i].title] = self.mainData[i];
-						};
+					var postData = {};
+					postData.searchItem = {
+						thirdapp_id:2
 					};
-					console.log('self.mainData', self.mainData)
-				}
+					postData.searchItem.id = window.base.GetRequest().id;			
+					var callback = (res) => {
+						if(res.info.data.length>0){
+							console.log('getMainData', res);
+							self.mainData = res.info.data[0];
+							self.mainData.create_time = self.mainData.create_time.substr(0,10)
+						}else{
+							alert('找不到这条招聘信息了！')
+						}
+					};
+					window.base.articleList(postData, callback);
+				},
 			}
 		});
 	</script>

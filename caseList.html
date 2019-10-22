@@ -11,6 +11,7 @@
 		<link type="text/css" rel="stylesheet" href="css/public.css">
 		<link type="text/css" rel="stylesheet" href="font/iconfont.css">
 		<link rel="stylesheet" type="text/css" href="css/page.css">
+		<link rel="stylesheet" type="text/css" href="css/mainInFor.css">
 		<script src="./js/vue.js"></script>
 		<script type="text/javascript" src="js/jquery.min.js"></script>
 		<script type="text/javascript" src="js/include.js"></script>
@@ -25,64 +26,68 @@
 			</div>
 
 			<div class="topSamllBan">
-				<img class="bjPic" src="images/product_center-banner.jpg" alt="">
+				<img class="bjPic" src="images/case-banner.jpg" alt="">
 			</div>
 			
 			<!-- 网站页面导航 -->
-			<div class="borderB1 pdtb10">
-				<div class="w1200 flex color6">
-					<img src="images/vproductCenter-icon2.png" >
-					<span class="mglr10">首页</span>/<span class="mglr10 pubcolor">精品案例</span>
+			<div  v-if="!currentCase.title">
+				<div class="borderB1 pdtb10">
+					<div class="w1200 flex color6">
+						<img src="images/vproductCenter-icon2.png" >
+						<a class="mglr10" href="index.html">首页</a>/<a class="mglr10 pubcolor">精品案例</a>
+					</div>
+				</div>
+				<div class="w1200 oh">
+					<div v-for="(item,index) in mainData">
+						<div class="pr flex">
+							<div class="anliLit mgtb30">{{item.title}}</div>
+							<div class="xian"></div>
+						</div>
+						<div class="caseList">
+							<ul>
+								<li v-for="(c_item,c_index) in item.article">
+									<a @click="goDetail(index,c_index)">
+										<div class="pic">
+											<img :src="c_item.mainImg&&c_item.mainImg[0]?c_item.mainImg[0].url:''"/>
+										</div>
+										<p class="flex tit color6 "><em class="avoidOverflow2">{{c_item.title}}</em></p>
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
 				</div>
 			</div>
-			<div class="w1200 oh">
-				<div class="pr flex">
-					<div class="anliLit mgtb30">智能能源案例</div>
-					<div class="xian"></div>
+			<div  v-if="currentCase.title">
+				<div class="borderB1 pdtb10">
+					<div class="w1200 flex color6">
+						<img src="images/vproductCenter-icon2.png" >
+						<a class="mglr10" href="index.html">首页</a>/<a class="mglr10" @click="goback">精品案例</a>/<span class="mglr10 pubcolor">{{currentCase.title}}</span>
+					</div>
 				</div>
-				<div class="caseList">
-					<ul>
-						<li>
-							<a href="proCenter.html">
-								<div class="pic">
-									<img src="images/case-img.jpg"/>
-								</div>
-								<p class="flex tit color6 "><em class="avoidOverflow2">汉中市天汉文化公园-能源蓝翔管理系统</em></p>
-							</a>
-						</li>
-						<li>
-							<a href="proCenter.html">
-								<div class="pic">
-									<img src="images/case-img1.jpg"/>
-								</div>
-								<p class="flex tit color6 "><em class="avoidOverflow2">汉中市天汉文化公园-能源蓝翔管理系统</em></p>
-							</a>
-						</li>
-						<li>
-							<a href="proCenter.html">
-								<div class="pic">
-									<img src="images/case-img2.jpg"/>
-								</div>
-								<p class="flex tit color6 "><em class="avoidOverflow2">汉中市天汉文化公园-能源蓝翔管理系统</em></p>
-							</a>
-						</li>
-					</ul>
-				</div>
-				<div class="pr flex">
-					<div class="anliLit mgtb30">油烟监测案例</div>
-					<div class="xian"></div>
-				</div>
-				<div class="caseList">
-					<ul>
-						<li>
-							<a href="proCenter.html">
-								<div class="pic">
-									<img src="images/case-img3.jpg"/>
-								</div>
-								<p class="flex tit color6 "><em class="avoidOverflow2">汉中市天汉文化公园-能源蓝翔管理系统</em></p>
-							</a>
-						</li>
-					</ul>
+				<div class="w1200 oh">
+					<div class="main-leftNav fl">
+						<div class="title center">
+							<img class="icon" src="images/case-icon.png" alt="">
+							<h1 class="tt ftw">精品案例</h1>
+						</div>
+						<div class="selnav oh">
+							<template v-for="(item,index) in leftNavData">
+								<a :class="current==index?'on':''" @click="change(index)" >{{item.title}}</a>
+							</template>
+						</div>
+					</div>
+					<div class="main-rightCont fr pdb40">
+						<div class="mainXqTit center">
+							<span class="tit fs20">{{currentCase.title}}</span>
+						</div>
+						<div class="mainXqInfor color6">
+							<div class="content ql-editor " style="clear: both;">
+								<p class="p1 " v-html="currentCase.content"></p>
+							</div>
+						</div>
+					</div>
+					
 				</div>
 			</div>
 			
@@ -97,8 +102,9 @@
 				return {
 					is_toggle: false,
 					mainData:[],
-					leftNavData:['智慧能源监控管理平台','智慧照明管理系统','智慧油烟在线监测管理系统','电器火灾远程监测预警系统'],
-					current:0
+					leftNavData:[],
+					current:0,
+					currentCase:{}
 				}
 			},
 			created: function() {
@@ -115,23 +121,81 @@
 
 			},
 			methods: {
+				
+				goback(){
+					const self = this;
+					self.currentCase = {}
+				},
+				
 				change(index){
 					var self = this;
 					self.current = index
+					self.currentCase = self.leftNavData[index]
 				},
-				goDetail(id){
-					window.base.location
+				
+				goDetail(index,c_index){
+					const self = this;
+					self.currentCase = self.mainData[index].article[c_index];
+					for (var i = 0; i < self.leftNavData.length; i++) {
+						if(self.leftNavData[i].title==self.mainData[index].article[c_index].title){
+							self.current = i
+						}
+					}
 				},
-				getMainData: function(id) {
-					var self = this;
-					var callback = function(res) {
-						console.log('getMainData', res);
-						self.mainData.push.apply(self.mainData, res.info.data);
-						for (var i = 0; i < self.mainData.length; i++) {
-							self[self.mainData[i].title] = self.mainData[i];
-						};
+				
+				getMainData() {
+					const self = this;
+					const postData = {};
+					postData.searchItem = {
+						thirdapp_id: 2
 					};
-					console.log('self.mainData', self.mainData)
+					postData.getBefore = {
+						caseData: {
+							tableName: 'Label',
+							searchItem: {
+								title: ['=', ['精品案例']],
+							},
+							middleKey: 'parentid',
+							key: 'id',
+							condition: 'in',
+						},
+					};
+					postData.getAfter = {
+						article: {
+							tableName: 'Article',
+							searchItem: {
+								status: 1
+							},
+							middleKey: 'id',
+							key: 'menu_id',
+							condition: 'in',
+							order:{
+								listorder:'desc'
+							}
+						},
+					};
+					postData.order = {
+						listorder: 'desc'
+					}
+					const callback = (res) => {
+						if (res.info.data.length > 0) {
+							self.mainData.push.apply(self.mainData, res.info.data);
+							for (var i = 0; i < self.mainData.length; i++) {
+								for (var j = 0; j < self.mainData[i].article.length; j++) {
+									self.leftNavData.push(self.mainData[i].article[j])
+								}
+							}
+							if(window.base.GetRequest().id){
+								for (var i = 0; i < self.leftNavData.length; i++) {
+									if(self.leftNavData[i].id==window.base.GetRequest().id){
+										self.currentCase = self.leftNavData[i];
+										self.current = i
+									}
+								}
+							}
+						}
+					};
+					window.base.labelGet(postData, callback);
 				},
 
 

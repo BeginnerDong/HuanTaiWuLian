@@ -34,17 +34,17 @@
 			<div class="borderB1 pdtb10">
 				<div class="w1200 flex color6 page_crumbNav">
 					<img src="images/vproductCenter-icon2.png" >
-					<a class="mglr10">首页</a>/<span class="mglr10 pubcolor">新闻中心</span>
+					<a class="mglr10" href="index.html">首页</a>/<span class="mglr10 pubcolor">新闻中心</span>
 				</div>
 			</div>
 			<div class="pr">
 				<div class="w1200 oh">
 					<div class="navtab">
-						<span :class="current==1?'on':''" @click="chagetape('1')">新闻中心</span>
+						<span :class="current==1?'on':''" @click="chagetape('1')">公司新闻</span>
 						<span :class="current==2?'on':''" @click="chagetape('2')">行业新闻</span>
 					</div>	
 					
-					<div class="newsIndex flexRowBetween" v-show="current==1">
+					<div class="newsIndex flexRowBetween">
 						<div class="left">
 							<div class="newLeftBanner">
 								<include src="newsBanner.html"></include>
@@ -53,15 +53,17 @@
 						<div class="right">
 							<div class="newslist">
 								<ul>
-									<li v-for="(item,index) in newslist">
-										<a href="newsCenterDetal.html">
+									<li v-for="(item,index) in mainData">
+										<a :href="'newsCenterDetal.html?id='+item.id">
 											<div class="time center">
-												<h1 class="day ftw">17</h1>
-												<h2 class="data ftw">2019.10</h2>
+												<h1 class="day ftw">{{item.d}}</h1>
+												<h2 class="data ftw">{{item.ym}}</h2>
 											</div>
 											<div class="infor">
-												<h1 class="tit avoidOverflow">携手共赢，广联达与乌鲁木齐市造价站签署项目开发协议</h1>
-												<p class="avoidOverflow2 color9 fs13">2019年9月26日，乌鲁木齐市建设工程造价管理站与广联达科技股份有限公司签署乌市建设工程综合材料价格采集、编制审查管理开发项目协议。</p>
+												<h1 class="tit avoidOverflow">{{item.title}}</h1>
+												<p class="avoidOverflow2 color9 fs13">
+													{{item.description}}
+												</p>
 											</div>
 										</a>
 									</li>
@@ -69,46 +71,19 @@
 							</div>
 						
 							<div class="all-pages">
-								<span>共:10页</span>
-								<span class="no-prev">上一页</span>
-							    <span class="current">1</span>
-							    <a href="#">2</a><a href="#">3</a>&nbsp;...&nbsp;<a href="#">100</a><a href="#" class="next">下一页</a>
+								<span>共:{{allPages}}页</span>
+								<span class="no-prev" data-type="back" @click="changePage">上一页</span>
+							   
+								<span v-for="item in pageArray" v-if="item == paginate.currentPage"  class="current">
+									{{item}}
+								</span>
+							    <span v-for="item in pageArray" v-if="item != paginate.currentPage" :data-page="item" @click="linkTo">
+									{{item}}
+							    </span>
+								<a href="#" class="next" data-type="next" @click="changePage">下一页</a>
 							</div>
 						</div>
 					</div>
-					<div class="newsIndex flexRowBetween" v-show="current==2">
-						<div class="left">
-							<div class="newLeftBanner">
-								<include src="newsBannerTwo.html"></include>
-							</div>
-						</div>
-						<div class="right">
-							<div class="newslist">
-								<ul>
-									<li v-for="(item,index) in newslist">
-										<a href="newsCenterDetal.html">
-											<div class="time center">
-												<h1 class="day ftw">18</h1>
-												<h2 class="data ftw">2019.10</h2>
-											</div>
-											<div class="infor">
-												<h1 class="tit avoidOverflow">数字化企业研习社走进广联达  共探工业互联网产业变革</h1>
-												<p class="avoidOverflow2 color9 fs13">9月22日，数字化企业研习社成员走进广联达，与多位专家学者、行业大咖共聚一堂，调研参访广联达数字建筑创新体验中心，并以“数字孪生：从中国制造到中国建造”为主题，洞察行业风向</p>
-											</div>
-										</a>
-									</li>
-								</ul>
-							</div>
-						
-							<div class="all-pages">
-								<span>共:10页</span>
-								<span class="no-prev">上一页</span>
-								<span class="current">1</span>
-								<a href="#">2</a><a href="#">3</a>&nbsp;...&nbsp;<a href="#">100</a><a href="#" class="next">下一页</a>
-							</div>
-						</div>
-					</div>
-					
 				</div>
 			</div>
 			
@@ -127,7 +102,28 @@
 					current:1,
 					newslist:[
 						{},{},{},{}
-					]
+					],
+					paginate:{
+						count: 0,
+						currentPage: 1,
+						pagesize: 4,
+						is_page: true,
+					},
+					getBefore:{
+						caseData: {
+							tableName: 'Label',
+							searchItem: {
+								title: ['=', ['公司新闻']],
+							},
+							middleKey: 'menu_id',
+							key: 'id',
+							condition: 'in',
+						},
+					},
+					linkPage: [],
+					pageArray: [],
+					
+					allPages: 0,
 				}
 			},
 			created: function() {
@@ -141,23 +137,69 @@
 				chagetape(current){
 					var self = this;
 					if(current!=self.current){
-						self.current =current
+						self.current =current;
+						if(self.current==1){
+							self.getBefore.caseData.searchItem.title = ['=',['公司新闻']]
+						}else if(self.current==2){
+							self.getBefore.caseData.searchItem.title = ['=',['行业新闻']]
+						}
+						self.getMainData(true)
 					}
 				},
+				
 				goDetail(id){
 					window.base.location
 				},
-				getMainData: function(id) {
-					var self = this;
-					var callback = function(res) {
-						console.log('getMainData', res);
-						self.mainData.push.apply(self.mainData, res.info.data);
-						for (var i = 0; i < self.mainData.length; i++) {
-							self[self.mainData[i].title] = self.mainData[i];
-						};
+				
+				getMainData(isNew) {
+					const self = this;
+					if(isNew){
+						self.mainData = [];
+						self.paginate = {
+							count: 0,
+							currentPage: 1,
+							pagesize: 4,
+							is_page: true,
+						}
 					};
-					console.log('self.mainData', self.mainData)
-				}
+					const postData = {};
+					postData.searchItem = {
+						thirdapp_id: 2
+					};
+					postData.paginate = window.base.cloneForm(self.paginate);
+					postData.getBefore = window.base.cloneForm(self.getBefore);
+					postData.order={
+						listorder:'desc'
+					};
+					const callback = (res) => {
+						if (res.info.data.length > 0) {
+							self.mainData.push.apply(self.mainData,res.info.data)
+							for (var i = 0; i < self.mainData.length; i++) {
+								self.mainData[i].ym = self.mainData[i].create_time.substr(0,7)
+								self.mainData[i].d = self.mainData[i].create_time.substr(8,2)
+							}	
+							self.paginate['count'] = res.info.total;
+							window.base.computePageArr(self);
+						} 
+						window.base.bus.$emit('to_newBanner', {
+							bannerData:self.mainData
+						});	
+					};
+					window.base.articleGet(postData, callback);
+				},
+				
+				linkTo(e) {
+					var self = this;
+					console.log(e);
+					self.linkPage = window.base.getDataSet(e).page;
+					window.base.linkTo(self);
+				},
+				
+				changePage(e) {
+					var self = this;
+					var dataSet = window.base.getDataSet(e);
+					window.base.changePage(dataSet, self);
+				},
 			}
 		});
 	</script>
