@@ -121,7 +121,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="item">
+					<div class="item" @click="backTop">
 						<span class="icon iconFour"></span>
 					</div>
 					
@@ -163,7 +163,10 @@
 					const self = this;
 					self.currentCase = {}
 				},
-				
+				backTop(){
+					document.body.scrollTop = 0
+					document.documentElement.scrollTop = 0
+				},
 				change(index){
 					var self = this;
 					self.current = index

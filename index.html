@@ -148,7 +148,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="item">
+					<div class="item" @click="backTop">
 						<span class="icon iconFour"></span>
 					</div>
 					
@@ -206,7 +206,10 @@
 					window.base.location
 				},
 				
-				
+				backTop(){
+					document.body.scrollTop = 0
+					document.documentElement.scrollTop = 0
+				},
 				getProductData() {
 					const self = this;
 					const postData = {};

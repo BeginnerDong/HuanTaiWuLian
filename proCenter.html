@@ -92,7 +92,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="item">
+					<div class="item" @click="backTop">
 						<span class="icon iconFour"></span>
 					</div>
 					
@@ -133,6 +133,10 @@
 					self.currentPro = self.mainData[index]
 				},
 				
+				backTop(){
+					document.body.scrollTop = 0
+					document.documentElement.scrollTop = 0
+				},
 				goDetail(id){
 					window.base.location
 				},
