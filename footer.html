@@ -2,7 +2,7 @@
 	<div class="w1200 flexRowBetween fs13">
 		<div class="item one">
 			<h1 class="title">企业简介</h1>
-			<p class="text fs12">环太物联是一家融合物联网整体解决方案提供商，创造由软件定义的物联网产品和应用服务解决方案，以贯通融合感知、物联网络、集成应用和控制执行的全链智慧，助力传统企业变革升级。</p>
+			<p class="text fs12">{{labelData.description}}</p>
 		</div>
 		<div class="item two">
 			<h1 class="title">网站导航</h1>
@@ -23,13 +23,13 @@
 			<h1 class="title">联系我们</h1>
 			<div class="flex">
 				<div class="left">
-					<img class="ewm" src="images/product%20center-img3.png" >
+					<img class="ewm" :src="conactData.mainImg&&conactData.mainImg[0]?conactData.mainImg[0].url:''" >
 					<p class="center mgt10">移动公众号</p>
 				</div>
 				<div class="flexColumn right">
-					<span>地址&nbsp;&nbsp;西安市碑林区李家村万达广场4号楼15F</span>
-					<span>电话&nbsp;&nbsp;029-85391630</span>
-					<span>邮箱&nbsp;&nbsp;wanpan@huan-tai.com</span>
+					<span>地址&nbsp;&nbsp;{{conactData.address}}</span>
+					<span>电话&nbsp;&nbsp;{{conactData.phone}}</span>
+					<span>邮箱&nbsp;&nbsp;{{conactData.email}}</span>
 				</div>
 			</div>
 		</div>
@@ -48,9 +48,9 @@
 	    data:function(){
 	        return {
 	        	is_toggle:false,
-				qrImg:[],
-				address:'',
-				phone:'',
+				
+				conactData:{},
+				labelData:{},
 				qrImgEwm:[
 					{
 						ewmUrl:"images/home-img1.jpg",
@@ -66,10 +66,10 @@
 	    },
 	    created:function () {
 	        var self = this;
-			//self.getMainData()
-	        
-			
+			self.getMainData()	
+			self.getLabelData()
 	    },
+		
 	    methods: {
 			
 			getMainData: function(id) {
@@ -77,13 +77,35 @@
 				var postData = {};
 				postData.searchItem = {
 					thirdapp_id:2,
-					title:'联系我们'
+				};
+				postData.getBefore = {
+					caseData: {
+						tableName: 'Label',
+						searchItem: {
+							title: ['=', ['联系我们']],
+						},
+						middleKey: 'menu_id',
+						key: 'id',
+						condition: 'in',
+					},
 				};
 				var callback = (res) => {
 					console.log('getMainData', res);
-					self.mainData = res.info.data[0];
-					self.address = self.mainData.url;
-					self.phone = self.mainData.description
+					self.conactData = res.info.data[0];
+				};
+				window.base.articleGet(postData, callback);
+			},
+			
+			getLabelData: function(id) {
+				var self = this;
+				var postData = {};
+				postData.searchItem = {
+					thirdapp_id:2,
+					title:'底部简介'
+				};
+				var callback = (res) => {
+					console.log('getMainData', res);
+					self.labelData = res.info.data[0];
 				};
 				window.base.labelGet(postData, callback);
 			},

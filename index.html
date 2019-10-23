@@ -13,6 +13,7 @@
 		<link rel="stylesheet" type="text/css" href="css/page.css">
 		<link rel="stylesheet" type="text/css" href="css/index.css">
 		<link rel="stylesheet" type="text/css" href="css/fx_rightBtn.css">
+		<link rel="stylesheet" href="css/animate/animate.min.css">
 		<script src="./js/vue.js"></script>
 		<script type="text/javascript" src="js/jquery.min.js"></script>
 		<script type="text/javascript" src="js/include.js"></script>
@@ -58,7 +59,7 @@
 						<a href="caseList.html" class="moreTexwrap flexEnd fs14">MORE&gt;</a>
 					</div>
 				
-					<div class="index_casePic flexCenter">
+					<div class="index_casePic flexCenter" id="case">
 						<div class="onePic pr oh" v-if="caseData[0]">
 							<a :href="'caseList.html?id='+caseData[0].id">
 								<img :src="caseData&&caseData[0]&&caseData[0].mainImg&&caseData[0].mainImg[0]?caseData[0].mainImg[0].url:''" alt="">
@@ -114,13 +115,7 @@
 					<h1 class="">物联共生 合作共赢</h1>
 				</div>
 				<div class="index_imgbox">
-					<div class="item" v-for="(item,index) in imgLisDate"><img src="images/home-img6.jpg" alt=""></div>
-					<div class="item"><img src="images/home-img6.jpg" alt=""></div>
-					<div class="item"><img src="images/home-img6.jpg" alt=""></div>
-					<div class="item"><img src="images/home-img6.jpg" alt=""></div>
-					<div class="item"><img src="images/home-img6.jpg" alt=""></div>
-					<div class="item"><img src="images/home-img6.jpg" alt=""></div>
-					
+					<div class="item" v-for="(item,index) in partnerData.mainImg"><img :src="item.url" alt=""></div>
 				</div>
 			</div>
 			
@@ -165,6 +160,12 @@
 	</body>
 
 	<script type="text/javascript">
+		
+		/* $('#case').waypoint(function() {
+		  $("#case").addClass('animated slideInUp');
+		  $("#case").css('opacity','1');
+		}, { offset: '70%' }); */
+		
 		var app = new Vue({
 			el: '#app',
 			data: function() {
@@ -176,7 +177,8 @@
 					caseLabelData:[],
 					caseId:[],
 					hezuoData:{},
-					imgLisDate:[{},{},{},{},{},{},{}]
+					imgLisDate:[{},{},{},{},{},{},{}],
+					partnerData:{}
 				}
 			},
 			created: function() {
@@ -193,9 +195,10 @@
 
 				};
 				//self.getMainData()
-				self.getProductData()
+				self.getProductData();
 				self.getCaseLabelData();
-				self.getHezuoLabelData()
+				self.getHezuoLabelData();
+				self.getPartnerData()
 			},
 			methods: {
 				
@@ -278,6 +281,21 @@
 					const callback = (res) => {
 						if (res.info.data.length > 0) {
 							self.hezuoData = res.info.data[0]		
+						} 
+					};
+					window.base.labelGet(postData, callback);
+				},
+				
+				getPartnerData() {
+					const self = this;
+					const postData = {};
+					postData.searchItem = {
+						thirdapp_id: 2,
+						title:'合作伙伴'
+					};
+					const callback = (res) => {
+						if (res.info.data.length > 0) {
+							self.partnerData = res.info.data[0]		
 						} 
 					};
 					window.base.labelGet(postData, callback);

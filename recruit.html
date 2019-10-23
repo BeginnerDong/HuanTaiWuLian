@@ -17,7 +17,7 @@
 		<script type="text/javascript" src="js/jquery.min.js"></script>
 		<script type="text/javascript" src="js/include.js"></script>
 		<script type="text/javascript" src="js/base.js"></script>
-		
+
 	</head>
 
 	<body>
@@ -31,28 +31,31 @@
 			<div class="pr topSamllBan">
 				<img class="bjPic" src="images/recruitment-img1.jpg" alt="">
 			</div>
-			
+
 			<!-- 网站页面导航 -->
 			<div class="borderB1 pdtb10">
 				<div class="w1200 flex color6 page_crumbNav">
-					<img src="images/vproductCenter-icon2.png" >
+					<img src="images/vproductCenter-icon2.png">
 					<a class="mglr10">首页</a>/<span class="mglr10 pubcolor">招聘英才</span>
 				</div>
 			</div>
-			
+
 			<div class="w1200 oh recruit_index flexRowBetween mgt20 pdb40">
 				<div class="leftPic">
-					<img :src="mainData.mainImg&&mainData.mainImg[0]?mainData.mainImg[0].url:''" >
+					<img :src="mainData.mainImg&&mainData.mainImg[0]?mainData.mainImg[0].url:''">
 				</div>
-				<div class="R_Infor">
+				<div class="R_Infor" id="news">
 					<H2 class="title borderB1 color5">招聘岗位</H2>
-					<div class="list">
-						<a v-for="(item,index) in mainData.article" :href="'recruitDetail.html?id='+item.id" >
-							<span class="L pubcolor">{{item.title}}</span>
-							<span class="M">{{item.description}}</span>
-							<span class="R">{{item.create_time}}</span>
-						</a>
+					<div class="scrollView">
+						<ul class="list">
+							<a class="a" v-for="(item,index) in mainData.article" :href="'recruitDetail.html?id='+item.id">
+								<span class="L pubcolor">{{item.title}}</span>
+								<span class="M">{{item.description}}</span>
+								<span class="R">{{item.create_time}}</span>
+							</a>
+						</ul>
 					</div>
+					
 				</div>
 			</div>
 			<include src="footer.html"></include>
@@ -60,50 +63,64 @@
 	</body>
 
 
-<script type="text/javascript">
+	<script type="text/javascript">
 		var app = new Vue({
 			el: '#app',
 			data: function() {
 				return {
-					is_show:false,
+					is_show: false,
 					is_toggle: false,
-					mainData:{},
-					zhiweiDate:[
-						{name:'UI工程师',address:'杭州市',time:'2019-10-10'},
-						{name:'前端中级工程师',address:'杭州市',time:'2019-10-10'},
-						{name:'审计主管',address:'西安市',time:'2019-10-10'},
-						{name:'宁波分公司核算主管',address:'西安市',time:'2019-10-10'},
-						{name:'核算主管',address:'宁波市',time:'2019-10-10'},
-						{name:'效能主管/经理',address:'滨江区',time:'2019-10-10'},
-						{name:'JAVA开发实习生',address:'西安市',time:'2019-10-10'},
-						{name:'语文教培产品研发经理',address:'杭州市',time:'2019-10-10'},
-					],
+					mainData: {},
+
 				}
 			},
 			created: function() {
 				var self = this;
-				window.onload = function() {
-				};
+				window.onload = function() {};
 				self.getMainData()
-
+				$(function() {
+					var $that = $("#news");
+					var scrollTimer;
+					$that.hover(function() {
+						clearInterval(scrollTimer);
+					}, function() {
+						scrollTimer = setInterval(function() {
+							self.scrollNews($that);
+						}, 1000);
+					}).trigger("mouseleave");
+				})
 			},
 			methods: {
-				chagetape(current){
+
+				
+				scrollNews(obj) {
+					var $self = obj.find("ul");
+					var lineHeight = $self.find("a:first").height();
+					$self.animate({
+						"top": -lineHeight + "px"
+					}, 500, function() {
+						$self.css({
+							marginTop: 0
+						}).find("a:first").appendTo($self);
+					})
+				},
+
+				chagetape(current) {
 					var self = this;
-					if(current!=self.current){
-						self.current =current
+					if (current != self.current) {
+						self.current = current
 					}
 				},
-				goDetail(id){
+				goDetail(id) {
 					window.base.location
 				},
-				
+
 				getMainData() {
 					const self = this;
 					const postData = {};
 					postData.searchItem = {
 						thirdapp_id: 2,
-						title:'招聘英才'
+						title: '招聘英才'
 					};
 					postData.getAfter = {
 						article: {
@@ -114,8 +131,8 @@
 							middleKey: 'id',
 							key: 'menu_id',
 							condition: 'in',
-							order:{
-								listorder:'desc'
+							order: {
+								listorder: 'desc'
 							}
 						},
 					};
@@ -126,7 +143,7 @@
 						if (res.info.data.length > 0) {
 							self.mainData = res.info.data[0];
 							for (var i = 0; i < self.mainData.article.length; i++) {
-								self.mainData.article[i].create_time = self.mainData.article[i].create_time.substr(0,10)
+								self.mainData.article[i].create_time = self.mainData.article[i].create_time.substr(0, 10)
 							}
 						}
 					};
@@ -136,39 +153,136 @@
 		});
 	</script>
 
-<style>
+	<style>
+		html {
+			background: #F5F5F5;
+		}
+		
+		.scrollView{
+			height: 1200px;
+			position: relative;
+			padding: 0;
+			margin: 0;
+			top:0
+		}
+		.recruit_index {
+			align-items: initial;
+			height: 550px;
+		}
 
-html{background: #F5F5F5;}
-.recruit_index { align-items: initial;}
-.recruit_index .leftPic{width: 30%;}
-.recruit_index .leftPic img{width: 100%; display: block;}
-.recruit_index .R_Infor{width: 68%;background: #FFF; margin-bottom: 40px;}
-.R_Infor .title{font-size: 18px;padding: 0 15px; line-height: 50px;}
-.R_Infor .list{min-height: 464px;}
-.R_Infor .list a{width: 100%;padding:15px 20px; display: block; display: flex; align-items: center; justify-content: space-between; line-height: 28px;box-sizing: border-box;}
-.R_Infor .list a:hover{background:#e6f7ff ;}
-.R_Infor .list .L{width: 55%;}
-.R_Infor .list .M{width: 25%; }
-.R_Infor .list .R{width: 20%;text-align: right;}
+		.recruit_index .leftPic {
+			width: 30%;
+		}
 
-@media screen and ( max-width:780px){ 
-	.R_Infor .list .L{width: 40%;}
-	.R_Infor .list .M{width: 30%; }
-	.R_Infor .list .R{width: 30%;text-align: right;}
-}
-@media screen and ( max-width:500px){ 
-	.R_Infor .title{font-size: 17px;padding: 0 10px;}
-	.recruit_index{padding: 0; margin-top: 0;}
-	.recruit_index .leftPic{display: none}
-	.recruit_index .R_Infor{width:100%;}
-	.R_Infor .list a{padding:15px 10px; border-bottom: 1px solid #eee;font-size: 13px;}
-	
-	.R_Infor .list{min-height: auto;}
-	.R_Infor .list .L{width: 48%;}
-	.R_Infor .list .M{width: 26%;text-align: center; }
-	.R_Infor .list .R{width: 26%;text-align: right;}
-}
+		.recruit_index .leftPic img {
+			width: 100%;
+			display: block;
+		}
 
-</style>
+		.recruit_index .R_Infor {
+			width: 68%;
+			background: #FFF;
+			margin-bottom: 40px;
+		}
+
+		.R_Infor .title {
+			font-size: 18px;
+			padding: 0 15px;
+			line-height: 50px;
+		}
+
+		.R_Infor .list {
+			height: 464px;
+			overflow: hidden;
+		}
+
+		.R_Infor .list a {
+			height: 58px;
+			width: 100%;
+			padding: 15px 20px;
+			display: block;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			line-height: 28px;
+			box-sizing: border-box;
+		}
+
+		.R_Infor .list a:hover {
+			background: #e6f7ff;
+		}
+
+		.R_Infor .list .L {
+			width: 55%;
+		}
+
+		.R_Infor .list .M {
+			width: 25%;
+		}
+
+		.R_Infor .list .R {
+			width: 20%;
+			text-align: right;
+		}
+
+		@media screen and (max-width:780px) {
+			.R_Infor .list .L {
+				width: 40%;
+			}
+
+			.R_Infor .list .M {
+				width: 30%;
+			}
+
+			.R_Infor .list .R {
+				width: 30%;
+				text-align: right;
+			}
+		}
+
+		@media screen and (max-width:500px) {
+			.R_Infor .title {
+				font-size: 17px;
+				padding: 0 10px;
+			}
+
+			.recruit_index {
+				padding: 0;
+				margin-top: 0;
+			}
+
+			.recruit_index .leftPic {
+				display: none
+			}
+
+			.recruit_index .R_Infor {
+				width: 100%;
+			}
+
+			.R_Infor .list a {
+				padding: 15px 10px;
+				border-bottom: 1px solid #eee;
+				font-size: 13px;
+			}
+
+			.R_Infor .list {
+				min-height: auto;
+			}
+
+			.R_Infor .list .L {
+				width: 48%;
+			}
+
+			.R_Infor .list .M {
+				width: 26%;
+				text-align: center;
+			}
+
+			.R_Infor .list .R {
+				width: 26%;
+				text-align: right;
+			}
+		}
+	</style>
 
 </html>

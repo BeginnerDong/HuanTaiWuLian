@@ -46,7 +46,7 @@
 					</div>
 					<div class="selnav oh">
 						<template v-for="(item,index) in leftNavData">
-							<a :class="current==index?'on':''" @click="change(index,id)">{{item}}</a>
+							<a :class="current==index?'on':''" @click="change(index,item.id)">{{item.title}}</a>
 						</template>
 					</div>
 				</div>
@@ -75,14 +75,16 @@
 					</div> -->
 
 					<!-- 关于我们 -->
+					<!-- <div class="Lmap"  id="dituContent">
 					
-					<div v-for="(item,index) in labelData" v-if="item.title=='联系我们'">
-						<div class="mainXqTit center" :id="item.id">
-							<span class="tit fs20 pubcolor">{{item.article&&item.article[0]?item.article[0].title:''}}</span>
+					</div> -->
+					<div>
+						<div class="mainXqTit center" id="13">
+							<span class="tit fs20 pubcolor">{{lianxiData.article&&lianxiData.article[0]?lianxiData.article[0].title:''}}</span>
 						</div>
 						<div class="mainXqInfor color6 pdb40">
 							<div class="flexRowBetween contactUs">
-								<div class="Lmap"  id="dituContent">
+								<div class="Lmap"  id="dituContent" style="height: 200px;">
 								
 								</div>
 								<div class="right">
@@ -115,7 +117,7 @@
 					current: 0,
 					labelData: [],
 					currentLabel: {},
-
+					lianxiData:{}
 				}
 			},
 			created: function() {
@@ -131,10 +133,15 @@
 			},
 			
 			methods: {
+				
+				
+				
+				
 				change(index,id) {
 					var self = this;
 					self.current = index
-					$('html, body').animate({scrollTop: $('#'+id).offset().top}, 1000)
+					console.log('id',id)
+					$('html, body').animate({scrollTop: $('#'+id).offset().top}, 500)
 				},
 				
 				goDetail(id) {
@@ -177,10 +184,10 @@
 							self.labelData.push.apply(self.labelData, res.info.data)
 							self.currentLabel = self.labelData[0];
 							for (var i = 0; i < self.labelData.length; i++) {
-								self.leftNavData.push(self.labelData[i].title)
+								self.leftNavData.push({title:self.labelData[i].title,id:self.labelData[i].id})
 								if (self.labelData[i].title == '联系我们'&&self.labelData[i].article[0]) {
 									console.log(3213)
-									self.lainxiData = self.labelData[i];
+									self.lianxiData = self.labelData[i];
 									var map = new BMap.Map("dituContent"); // 创建地图实例
 									var point = new BMap.Point(self.labelData[i].article[0].longitude,self.labelData[i].article[0].latitude); // 创建点坐标  
 									map.centerAndZoom(point, 15);
