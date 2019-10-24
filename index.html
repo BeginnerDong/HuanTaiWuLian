@@ -40,9 +40,11 @@
 				<div class="w1200">
 					<ul>
 						<li v-for="(item,index) in indshareLis" :key="index">
-							<img class="icon" :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" alt="">
-							<h1>{{item.title}}</h1>
-							<p>{{item.description}}</p>
+							<a href="#">
+								<img class="icon" :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" alt="">
+								<h1>{{item.title}}</h1>
+								<p>{{item.description}}</p>
+							</a>
 						</li>
 					</ul>
 				</div>
