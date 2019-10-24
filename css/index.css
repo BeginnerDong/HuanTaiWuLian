@@ -27,18 +27,18 @@
 .index_casePic>div img:hover{ transform: scale(1.1);}
 .index_casePic .onePic{ width: 751px; height: 432px; margin-right: 10px;
 	position:relative;
-	animation:myOnePic 5s;
-	-moz-animation:myOnePic 5s; /* Firefox */
-	-webkit-animation:myOnePic 5s; /* Safari and Chrome */
-	-o-animation:myOnePic 5s;
+	animation:myOnePic 1.5s;
+	-moz-animation:myOnePic 1.5s; /* Firefox */
+	-webkit-animation:myOnePic 1.5s; /* Safari and Chrome */
+	-o-animation:myOnePic 1.5s;
 }
 .index_casePic .onePic .text{line-height: 50px;}
 .index_casePic .twoPic .item{width: 363px; height: 211px;	
 	position:relative;
-	animation:myTwoPic 5s;
-	-moz-animation:myTwoPic 5s; /* Firefox */
-	-webkit-animation:myTwoPic 5s; /* Safari and Chrome */
-	-o-animation:myTwoPic 5s;
+	animation:myTwoPic 1.5s;
+	-moz-animation:myTwoPic 1.5s; /* Firefox */
+	-webkit-animation:myTwoPic 1.5s; /* Safari and Chrome */
+	-o-animation:myTwoPic 1.5s;
 }
 .index_casePic .twoPic .item:first-child{margin-bottom: 10px;}
 @keyframes myOnePic{
