@@ -7,7 +7,7 @@
  */
 
 .pubHeader{width:100%;}
-.pubHeadBanner{width:100%;height: 400px;}
+.pubHeadBanner{width:100%;height: 558px;}
 
 
 /* 更多按钮*/
@@ -26,6 +26,17 @@
 
 
 /******************* 以下自适应样式 *******************/
+
+/* banner 各种屏幕自适应 */
+@media only screen and (max-width: 1600px){.pubHeadBanner{height: 520px;}}
+@media only screen and (max-width: 1440px){.pubHeadBanner{height: 418px;}}
+@media only screen and (max-width: 1366px){.pubHeadBanner{height: 390px;}}
+@media only screen and (max-width: 1280px){.pubHeadBanner{height: 370px;}}
+@media only screen and (max-width: 1024px){.pubHeadBanner{height: 280px;}}
+/* banner自适应 end */
+
+
+/* yiqian */
 @media screen and ( max-width: 1200px){
 	.w1200{ width: 90%!important; box-sizing:border-box; padding: 0 10px}
 }
@@ -33,7 +44,7 @@
 	.w1200{ width: 100%!important;}
 	.indNavbar .logo{ width: auto; height: 40px;}
 	/* .pubHeader{ height: 80px;} */
-	.pubHeadBanner{width:100%;height: 300px;}
+	.pubHeadBanner{width:100%;height: 260px;}
 	.MdMorebtn{ padding: 70px 0}
 }
 
