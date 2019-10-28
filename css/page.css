@@ -39,6 +39,7 @@
 /* yiqian */
 @media screen and ( max-width: 1200px){
 	.w1200{ width: 90%!important; box-sizing:border-box; padding: 0 10px}
+	.indNavbar{padding: 10px 0;}
 }
 @media screen and ( max-width: 1000px){ 
 	.w1200{ width: 100%!important;}
@@ -56,7 +57,7 @@
 	.topSamllBan .bjPic{height: 120px;}
 	.index_employ .bjPic{height: 150px;}
 	
-	body{ padding-top: 57px;}
+	/* body{ padding-top: 57px;} */
 	.pdb60{ padding-bottom: 20px;}
 }
 

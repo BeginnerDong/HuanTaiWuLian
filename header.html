@@ -1,5 +1,5 @@
 
-<div id="header_app" class="bgc-white">
+<div id="header_app" class="bgc-white headH head-fixH">
 	<div class="indNavbar w1200 pdtb10 pr flexRowBetween">
 		<div class="leftLogo flex">
 			<img class="logo" src="images/logo.png">
@@ -9,7 +9,7 @@
 			</div>
 		</div>
 		
-		<div class="flexEnd rightNav">
+		<div class="flexRowBetween rightNav">
 			<div class="list fr">
 				<ul>
 					<li :class="currentUrl=='/index.html'?'on':''">
@@ -46,6 +46,7 @@
 		<div class="navBtn center iconfont" @click="topNavBtn">&#xe605;</div>
 	</div>
 </div>
+<div class="headH"></div>
 
 <script type="text/javascript">
 	 $(function(){
@@ -129,21 +130,40 @@
 
 <style>
  /*网站导航*/
-.indNavbar .logo{ width:170px; height:85px; display: block; margin-right:15px;}
-.leftLogo .text{border-left: 1px solid #d5d5d5;padding:0 15px;}
-.indNavbar .rightNav{width: 72%; }
+.indNavbar .logo{ width:130px; height:65px; display: block; margin-right:15px;}
+.leftLogo .text{border-left: 1px solid #d5d5d5;padding:0 5px 0 15px;}
+.indNavbar .rightNav{width: 75%; }
 .indNavbar .list{ width: 75%; padding-right: 20px;box-sizing: border-box;}
 .indNavbar .list ul{ width:100%; display: flex;justify-content: space-around;flex-wrap: nowrap;}
 .indNavbar .list li a{ display: block; line-height: 24px; font-size: 16px;padding: 0 8px;}
 .indNavbar .list li.on a{color: #0d6fb8;}
 .indNavbar .navBtn{ width: 36px; height: 36px; line-height: 36px; font-size: 26px;position: absolute; right: 10px; top:12px; z-index: 66; display: none;background: rgba(0,0,0,0.6);border-radius: 5px;color: #fff;}
 
-@media screen and ( max-width: 1000px){ 
-	.indNavbar .logo{ width: auto; height: 40px;}
+.headH{ height: 85px;}
+.head-fixH{width: 100%; position: fixed;top: 0;left: 0; z-index: 66;box-shadow: 0 0 8px rgba(0,0,0,0.1);}
+
+@media screen and ( max-width: 1100px){ 
+	.indNavbar .list li a{font-size: 14px;}
+	.indNavbar .Rphone .number p{font-size: 14px;}
+	.indNavbar .rightNav{width: 66%;}
+	.indNavbar .logo{height: 55px; width: 110px;}
+	.headH{ height: 75px;}
 }
+
+@media screen and ( max-width: 900px){ 
+	.indNavbar .logo{ width: auto; height: 40px;}
+	.indNavbar{padding: 10px;}
+	.indNavbar .Rphone{display: none;}
+	.indNavbar .list{width: 100%;}
+	.headH{ height: 64px;}
+}
+
 @media screen and ( max-width: 750px){ 
 	.indNavbar.w1200{ width: 100%!important;}
 	.indNavbar .logo{ width: auto; height:32px; margin-left:10px;margin: 0 10px;}
+	.headH{ height: 57px;}
+	
+	.leftLogo{width: 100%;}
 	.leftLogo .text{padding: 0 10px;}
 	.leftLogo .text p{line-height: 18px;}
 	
@@ -157,11 +177,13 @@
 	.indNavbar .list{ width: 100%;top: 57px; background: rgba(0,0,0,0.6);display: none;position: fixed;left: 0;    transform: translateY(0); padding-right: 0;}
 	.indNavbar .list ul{display: inline-block; text-align: center;}
 	.indNavbar .list li{ width: 100%;}
-	.indNavbar .list li a{color: #fff; padding-bottom: 5px; line-height: 40px; }
+	.indNavbar .list li a{color: #fff; padding-bottom: 5px; line-height: 40px;font-size: 14px; }
 	.indNavbar .list li.on{ background:#0d6fb8;}
-	.indNavbar .list li.on a{ font-size: 18px; color: #fff;}
+	.indNavbar .list li.on a{ font-size: 14px; color: #fff;}
 	.indNavbar .list li.on a::after{ height:0px;}
 }
+
+
 
 </style>
 
