@@ -1,7 +1,7 @@
 <div id="banner_app" style="">
-	<div class="banner clearfix" v-for="(item,index) in bannerData" v-show="index==banner_index" style="height:100%">
-		<img :src="item.url" />
-	</div>
+	<a v-for="(item,index) in bannerData" :href="item.url" class="banner clearfix"  v-show="index==banner_index" style="height:100%">
+		<img :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" />
+	</a>
 	
 	<!-- 导航点 -->
 	<div class="banBtnNav">
@@ -82,10 +82,23 @@
 	    	to_headBanner:function(){
 				var self = this;
 				var postData = {};
-				postData.searchItem = window.base.cloneForm(self.searchItem);
+				postData.searchItem = {
+					thirdapp_id:2
+				};
+				postData.getBefore = {
+					caseData: {
+						tableName: 'Label',
+						searchItem: {
+							title: ['=', ['首页轮播图']],
+						},
+						middleKey: 'parentid',
+						key: 'id',
+						condition: 'in',
+					},
+				};
 				var callback = function(res){
 				     if(res.info.data.length>0){
-						 self.bannerData =res.info.data[0].mainImg;
+						 self.bannerData.push.apply(self.bannerData,res.info.data);
 						 console.log('self.bannerData',self.bannerData)
 				     };    
 				};

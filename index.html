@@ -13,6 +13,7 @@
 		<link rel="stylesheet" type="text/css" href="css/page.css">
 		<link rel="stylesheet" type="text/css" href="css/index.css">
 		<link rel="stylesheet" type="text/css" href="css/fx_rightBtn.css">
+		<link rel="stylesheet" type="text/css" href="css/wxParse.css">
 		<link rel="stylesheet" href="css/animate/animate.min.css">
 		<script src="./js/vue.js"></script>
 		<script type="text/javascript" src="js/jquery.min.js"></script>
@@ -40,7 +41,7 @@
 				<div class="w1200">
 					<ul>
 						<li v-for="(item,index) in indshareLis" :key="index">
-							<a href="#">
+							<a :href="'proCenter.html?id='+item.id">
 								<img class="icon" :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" alt="">
 								<h1>{{item.title}}</h1>
 								<p>{{item.description}}</p>
@@ -107,7 +108,7 @@
 							</div>
 						</div>
 						<div class="flexEnd mgt10">
-							<a class="white Rlink fs16" href="#">查看全部在招聘职位&nbsp;&gt;</a>
+							<a class="white Rlink fs16" href="recruit.html">查看全部在招聘职位&nbsp;&gt;</a>
 						</div>
 					</div>
 				</div>
@@ -180,7 +181,8 @@
 					caseId:[],
 					hezuoData:{},
 					imgLisDate:[{},{},{},{},{},{},{}],
-					partnerData:{}
+					partnerData:{},
+					
 				}
 			},
 			created: function() {

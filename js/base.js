@@ -1013,6 +1013,7 @@ window.base = {
 		console.log(self.paginate);
 		self.pageArray = [];
 		self.pageArray.push(self.paginate.currentPage);
+		console.log('self.pageArray',self.pageArray)
 		if (self.paginate.currentPage + 1 <= self.allPages) {
 			if (self.paginate.currentPage + 2 <= self.allPages) {
 				self.pageArray.push(self.paginate.currentPage + 1);
@@ -1030,7 +1031,7 @@ window.base = {
 				self.pageArray.unshift(self.paginate.currentPage - 1);
 			}
 		};
-
+		
 	},
 
 	changePage: function(dataSet, self) {
@@ -1039,7 +1040,8 @@ window.base = {
 				alert('已经到底啦')
 			} else {
 				self.paginate.currentPage++;
-				
+				self.mainData = [];
+				self.getMainData();
 			}
 		};
 		if (dataSet.type == 'back') {
@@ -1047,7 +1049,8 @@ window.base = {
 				alert('已经没有啦')
 			} else {
 				self.paginate.currentPage--;
-				
+				self.mainData = [];
+				self.getMainData();
 			}
 		};
 
@@ -1059,8 +1062,8 @@ window.base = {
 			self.linkPage = '';
 		} else {
 			self.paginate.currentPage = self.linkPage;
-			return true;
-			
+			self.mainData = [];
+			self.getMainData();
 		}
 
 	},

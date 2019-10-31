@@ -13,6 +13,7 @@
 		<link rel="stylesheet" type="text/css" href="css/page.css">
 		<link rel="stylesheet" type="text/css" href="css/mainInFor.css">
 		<link rel="stylesheet" type="text/css" href="css/fx_rightBtn.css">
+		<link rel="stylesheet" type="text/css" href="css/wxParse.css">
 		<script src="./js/vue.js"></script>
 		<script type="text/javascript" src="js/jquery.min.js"></script>
 		<script type="text/javascript" src="js/include.js"></script>
@@ -27,7 +28,7 @@
 			</div>
 
 			<div class="topSamllBan">
-				<img class="bjPic" src="images/case-banner.jpg" alt="">
+				<img class="bjPic" :src="labelData.mainImg&&labelData.mainImg[0]?labelData.mainImg[0].url:''" alt="">
 			</div>
 			
 			<!-- 网站页面导航 -->
@@ -141,7 +142,8 @@
 					mainData:[],
 					leftNavData:[],
 					current:0,
-					currentCase:{}
+					currentCase:{},
+					labelData:{}
 				}
 			},
 			created: function() {
@@ -155,9 +157,24 @@
 
 				};
 				self.getMainData()
-
+				self.getLabelData()
 			},
 			methods: {
+				
+				getLabelData() {
+					const self = this;
+					const postData = {};
+					postData.searchItem = {
+						thirdapp_id: 2,
+						title:'精品案例'
+					};
+					const callback = (res) => {
+						if (res.info.data.length > 0) {
+							self.labelData = res.info.data[0]
+						} 
+					};
+					window.base.labelGet(postData, callback);
+				},
 				
 				goback(){
 					const self = this;

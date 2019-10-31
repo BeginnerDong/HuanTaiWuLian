@@ -12,6 +12,7 @@
 		<link type="text/css" rel="stylesheet" href="font/iconfont.css">
 		<link rel="stylesheet" type="text/css" href="css/page.css">
 		<link rel="stylesheet" type="text/css" href="css/mainInFor.css">
+		<link rel="stylesheet" type="text/css" href="css/wxParse.css">
 		<script src="./js/vue.js"></script>
 		<script type="text/javascript" src="js/jquery.min.js"></script>
 		<script type="text/javascript" src="js/include.js"></script>
@@ -28,7 +29,7 @@
 			</div>
 
 			<div class="pr topSamllBan">
-				<img class="bjPic" src="images/about_us-banner.jpg" alt="">
+				<img class="bjPic" :src="aboutData.mainImg&&aboutData.mainImg[0]?aboutData.mainImg[0].url:''" alt="">
 			</div>
 
 			<!-- 网站页面导航 -->
@@ -90,10 +91,10 @@
 								<div class="right">
 									<h1 class="ftw fs18 color3 pdb30">西安环太物联技术有限公司</h1>
 									<div class="flexColumn FS12" style="align-items: flex-start;">
-										<h3>电话&nbsp;&nbsp;029-85391630</h3>
-										<h3>地址&nbsp;&nbsp;西安市碑林区李家村万达广场4号楼15F</h3>
-										<h3>邮箱&nbsp;&nbsp;wangpan@huan-tai.com</h3>
-										<h3>微信号&nbsp;&nbsp;环太物联</h3>
+										<h3>电话&nbsp;&nbsp;{{lianxiData.article&&lianxiData.article[0]?lianxiData.article[0].phone:''}}</h3>
+										<h3>地址&nbsp;&nbsp;{{lianxiData.article&&lianxiData.article[0]?lianxiData.article[0].address:''}}</h3>
+										<h3>邮箱&nbsp;&nbsp;{{lianxiData.article&&lianxiData.article[0]?lianxiData.article[0].email:''}}</h3>
+										<h3>微信号&nbsp;&nbsp;{{lianxiData.article&&lianxiData.article[0]?lianxiData.article[0].wechat:''}}</h3>
 									</div>
 								</div>
 							</div>
@@ -117,7 +118,8 @@
 					current: 0,
 					labelData: [],
 					currentLabel: {},
-					lianxiData:{}
+					lianxiData:{},
+					aboutData:{}
 				}
 			},
 			created: function() {
@@ -125,6 +127,7 @@
 				window.onload = function() {
 					self.getLabelData()
 				};
+				self.getAboutData()
 			},
 			
 			mounted:function(){
@@ -135,7 +138,20 @@
 			methods: {
 				
 				
-				
+				getAboutData() {
+					const self = this;
+					const postData = {};
+					postData.searchItem = {
+						thirdapp_id: 2,
+						title:'关于我们'
+					};
+					const callback = (res) => {
+						if (res.info.data.length > 0) {
+							self.aboutData = res.info.data[0]
+						} 
+					};
+					window.base.labelGet(postData, callback);
+				},
 				
 				change(index,id) {
 					var self = this;

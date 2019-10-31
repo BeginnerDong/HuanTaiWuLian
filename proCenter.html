@@ -13,6 +13,7 @@
 		<link rel="stylesheet" type="text/css" href="css/page.css">
 		<link rel="stylesheet" type="text/css" href="css/mainInFor.css">
 		<link rel="stylesheet" type="text/css" href="css/fx_rightBtn.css">
+		<link rel="stylesheet" type="text/css" href="css/wxParse.css">
 		<script src="./js/vue.js"></script>
 		<script type="text/javascript" src="js/jquery.min.js"></script>
 		<script type="text/javascript" src="js/include.js"></script>
@@ -28,7 +29,7 @@
 			</div>
 
 			<div class="topSamllBan">
-				<img class="bjPic" src="images/product_center-banner.jpg" alt="">
+				<img class="bjPic" :src="labelData.mainImg&&labelData.mainImg[0]?labelData.mainImg[0].url:''" alt="">
 			</div>
 			
 			<!-- 网站页面导航 -->
@@ -112,7 +113,8 @@
 					mainData:[],
 					leftNavData:[],
 					current:0,
-					currentPro:{}
+					currentPro:{},
+					labelData:{}
 				}
 			},
 			created: function() {
@@ -124,7 +126,7 @@
 
 				};
 				self.getMainData()
-
+				self.getLabelData()
 			},
 			methods: {
 				change(index){
@@ -139,6 +141,21 @@
 				},
 				goDetail(id){
 					window.base.location
+				},
+				
+				getLabelData() {
+					const self = this;
+					const postData = {};
+					postData.searchItem = {
+						thirdapp_id: 2,
+						title:'产品中心'
+					};
+					const callback = (res) => {
+						if (res.info.data.length > 0) {
+							self.labelData = res.info.data[0]
+						} 
+					};
+					window.base.labelGet(postData, callback);
 				},
 				
 				getMainData() {
@@ -164,11 +181,24 @@
 					const callback = (res) => {
 						if (res.info.data.length > 0) {
 							self.mainData.push.apply(self.mainData,res.info.data)
-							self.currentPro = self.mainData[0];
+							if(window.base.GetRequest().id){
+								console.log('ewqewq')
+								for (var i = 0; i < self.mainData.length; i++) {
+									if(self.mainData[i].id==window.base.GetRequest().id){
+										self.currentPro = self.mainData[i];
+										self.current = i
+									}
+								}
+							}else{
+								console.log(2323)
+								self.currentPro = self.mainData[0];
+							}
 							for (var i = 0; i < self.mainData.length; i++) {
 								
 								self.leftNavData.push(self.mainData[i].title)
 							}
+							console.log('self.currentPro',self.currentPro)
+							console.log('window.base.GetRequest().id',window.base.GetRequest().id)
 						} 
 					};
 					window.base.articleGet(postData, callback);

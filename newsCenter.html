@@ -13,6 +13,7 @@
 		<link rel="stylesheet" type="text/css" href="css/page.css">
 		<link rel="stylesheet" type="text/css" href="css/mainInFor.css">
 		<link rel="stylesheet" type="text/css" href="css/newsBaner.css">
+		<link rel="stylesheet" type="text/css" href="css/wxParse.css">
 		<script src="./js/vue.js"></script>
 		<script type="text/javascript" src="js/jquery.min.js"></script>
 		<script type="text/javascript" src="js/include.js"></script>
@@ -27,7 +28,7 @@
 			</div>
 
 			<div class="pr topSamllBan">
-				<img class="bjPic" src="images/new-banner.jpg" alt="">
+				<img class="bjPic" :src="labelData.mainImg&&labelData.mainImg[0]?labelData.mainImg[0].url:''" alt="">
 			</div>
 			
 			<!-- 网站页面导航 -->
@@ -74,10 +75,10 @@
 								<span>共:{{allPages}}页</span>
 								<span class="no-prev" data-type="back" @click="changePage">上一页</span>
 							   
-								<span v-for="item in pageArray" v-if="item == paginate.currentPage"  class="current">
+								<!-- <span v-for="item in pageArray" v-if="item == paginate.currentPage"  class="current">
 									{{item}}
-								</span>
-							    <span v-for="item in pageArray" v-if="item != paginate.currentPage" :data-page="item" @click="linkTo">
+								</span> -->
+							    <span v-for="item in pageArray" :class="item == paginate.currentPage?'current':''"  :data-page="item" @click="linkTo">
 									{{item}}
 							    </span>
 								<a href="#" class="next" data-type="next" @click="changePage">下一页</a>
@@ -124,6 +125,7 @@
 					pageArray: [],
 					
 					allPages: 0,
+					labelData:{}
 				}
 			},
 			created: function() {
@@ -131,9 +133,25 @@
 				window.onload = function() {
 				};
 				self.getMainData()
-
+				self.getLabelData()
 			},
 			methods: {
+				
+				getLabelData() {
+					const self = this;
+					const postData = {};
+					postData.searchItem = {
+						thirdapp_id: 2,
+						title:'新闻中心'
+					};
+					const callback = (res) => {
+						if (res.info.data.length > 0) {
+							self.labelData = res.info.data[0]
+						} 
+					};
+					window.base.labelGet(postData, callback);
+				},
+				
 				chagetape(current){
 					var self = this;
 					if(current!=self.current){
