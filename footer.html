@@ -9,13 +9,16 @@
 			<div class="samllis flexRowBetween">
 				<div class="flexColumn">
 					<a href="index.html" style="font-size: 13px;margin-bottom: 10px;line-height: 22px;color: #fff;">首页</a>
-					<a href="aboutUs.html" style="font-size: 13px;margin-bottom: 10px;line-height: 22px;color: #fff;">关于我们</a>
 					<a href="proCenter.html" style="font-size: 13px;margin-bottom: 10px;line-height: 22px;color: #fff;">产品中心</a>
-					<a href="caseList.html" style="font-size: 13px;margin-bottom: 10px;line-height: 22px;color: #fff;">项目案例</a>
+					<a href="caseList.html" style="font-size: 13px;margin-bottom: 10px;line-height: 22px;color: #fff;">精品案例</a>
+					<a href="newsCenter.html" style="font-size: 13px;margin-bottom: 10px;line-height: 22px;color: #fff;">新闻中心</a>
+					
+					
 				</div>
 				<div class="flexColumn">
-					<a href="recruit.html" style="font-size: 13px;margin-bottom: 10px;line-height: 22px;color: #fff;">招贤纳士</a>
-					<a href="newsCenter.html" style="font-size: 13px;margin-bottom: 10px;line-height: 22px;color: #fff;">新闻中心</a>
+					<a href="aboutUs.html" style="font-size: 13px;margin-bottom: 10px;line-height: 22px;color: #fff;">关于我们</a>
+					<a href="recruit.html" style="font-size: 13px;margin-bottom: 10px;line-height: 22px;color: #fff;">招聘英才</a>
+					
 				</div>
 			</div>
 		</div>
@@ -24,7 +27,7 @@
 			<div class="flex">
 				<div class="left">
 					<img class="ewm" :src="conactData.mainImg&&conactData.mainImg[0]?conactData.mainImg[0].url:''" >
-					<p class="center mgt10">移动公众号</p>
+					<p class="center mgt10">微信公众号</p>
 				</div>
 				<div class="flexColumn right">
 					<span>地址&nbsp;&nbsp;{{conactData.address}}</span>
@@ -51,16 +54,6 @@
 				
 				conactData:{},
 				labelData:{},
-				qrImgEwm:[
-					{
-						ewmUrl:"images/home-img1.jpg",
-						ewmName:"企业微博"
-					},
-					{
-						ewmUrl:"images/home-img2.png",
-						ewmName:"企业公众号"
-					}
-				],
 				copyright:'COPYRIGHT © 2010- 2019.版权所有 西安环太物联技术有限公司'
 	        }
 	    },
