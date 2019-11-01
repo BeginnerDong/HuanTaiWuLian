@@ -44,7 +44,7 @@
 							<a :href="'proCenter.html?id='+item.id">
 								<img class="icon" :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" alt="">
 								<h1>{{item.title}}</h1>
-								<p>{{item.description}}</p>
+								<p class="avoidOverflow3">{{item.description}}</p>
 							</a>
 						</li>
 					</ul>
@@ -117,8 +117,9 @@
 				<div class="pubTitle center fs20">
 					<h1 class="">物联共生 合作共赢</h1>
 				</div>
-				<div class="index_imgbox">
-					<div class="item" v-for="(item,index) in partnerData.mainImg"><img :src="item.url" alt=""></div>
+				<div class="index_partImg">
+					<div class="item" v-for="(item,index) in partnerData.mainImg">
+						<img :src="item.url" alt=""></div>
 				</div>
 			</div>
 			

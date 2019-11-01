@@ -7,7 +7,7 @@
  */
 
 .pubHeader{width:100%;}
-.pubHeadBanner{width:100%;height: 558px;}
+.pubHeadBanner{width:100%;height: 550px;}
 
 
 /* 更多按钮*/
@@ -24,16 +24,37 @@
 .backBtn{width: 100px; height: 36px;text-align: center; line-height: 36px; color: #999;border: 1px solid #EEE; display: block;}
 .backBtn:hover{background: #149ce7; color: #fff;border-color: #149ce7;}
 
+.index_partImg .item{width: 100%;}
+.index_partImg .item img{width: 100%; height: auto; display: block;}
 
 /******************* 以下自适应样式 *******************/
 
 /* banner 各种屏幕自适应 */
-@media only screen and (max-width: 1600px){.pubHeadBanner{height: 520px;}}
-@media only screen and (max-width: 1440px){.pubHeadBanner{height: 418px;}}
-@media only screen and (max-width: 1366px){.pubHeadBanner{height: 390px;}}
-@media only screen and (max-width: 1280px){.pubHeadBanner{height: 370px;}}
-@media only screen and (max-width: 1024px){.pubHeadBanner{height: 280px;}}
+@media only screen and (max-width: 1600px){
+	.pubHeadBanner{height: 458px;}
+	.index_employ img.bjPic{height: 287px;}
+}
+@media only screen and (max-width: 1440px){
+	.pubHeadBanner{height: 413px;}
+	.index_employ img.bjPic{height: 259px;}
+}
+@media only screen and (max-width: 1366px){
+	.pubHeadBanner{height: 391px;}
+	.index_employ img.bjPic{height: 245px;}
+}
+@media only screen and (max-width: 1280px){
+	.pubHeadBanner{height: 367px;}
+	.index_employ img.bjPic{height: 230px;}
+}
+@media only screen and (max-width: 1024px){
+	.pubHeadBanner{height: 293px;}
+	.index_employ img.bjPic{height: 184px;}
+	.index_employ img.Ltit{ width: 80px; height: 80px;}
+}
 /* banner自适应 end */
+
+
+
 
 
 /* yiqian */
@@ -50,19 +71,26 @@
 }
 
 
-@media screen and ( max-width:750px){ 
+@media screen and ( max-width:770px){ 
 	.pubHeadBanner{width:100%;height:200px;}
 	#banner_app .arrowIon{ display: none;}
 	
-	.topSamllBan .bjPic{height: 120px;}
-	.index_employ .bjPic{height: 150px;}
+	.index_employ{height: 150px;}
+	/* .index_employ .bjPic{height: 150px;} */
+	
+	.topSamllBan{height: 80px;}
+	.topSamllBan .bjPic,.index_employ img.bjPic{width: auto; height: 100%;position: relative;top: 0;left: 50%;transform: translateX(-50%);}
 	
 	/* body{ padding-top: 57px;} */
 	.pdb60{ padding-bottom: 20px;}
+	
+	
 }
 
 @media screen and ( max-width:500px){ 
 	.pubHeadBanner{width:100%;height:150px;}
+	.pubHeadBanner #banner_app .banner img{width: auto; height: 100%;position: relative;top: 0;left: 50%;transform: translateX(-50%);}
+	
 }
 
 

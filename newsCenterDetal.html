@@ -17,6 +17,11 @@
 		<script type="text/javascript" src="js/jquery.min.js"></script>
 		<script type="text/javascript" src="js/include.js"></script>
 		<script type="text/javascript" src="js/base.js"></script>
+	<style>
+		.mainXqInfor .ql-editor{font-size: 14px; line-height: 24px;}
+		.mainXqInfor img{margin: 10px auto!important;}
+		/* .mainXqInfor span{font-size: 14px;line-height: 24px;} */
+	</style>
 	</head>
 
 	<body>
@@ -272,7 +277,7 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdPic
 .newsXq_pageNav .infor{max-height: 420px;overflow-y: auto;}
 .newsXq_pageNav li{padding: 15px 35px 10px 10px; border-bottom: 1px solid #eee;}
 .newsXq_pageNav li a{width: 100%; height: 100%; display: block;}
-.newsXq_pageNav li .tt{margin-bottom: 10xp;}
+.newsXq_pageNav li .tt{margin-bottom: 5px; font-size: 16px;font-weight: normal;}
 .newsXq_pageNav li:hover{background: #F5F5F5;}
 .newsXq_pageNav li:hover .tt{color: #149ce7;}
 
@@ -280,14 +285,17 @@ window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdPic
 .articleTit_lis .leftInfor{ align-items: flex-start; }
 .articleTit_lis .leftInfor a{line-height: 30px;}
 
+.main-rightCont{width: 78%; padding-left: 4%;}
 
-
-
+@media screen and ( max-width:1024px){
+	.main-rightCont{width: 74%;} 
+}
 @media screen and ( max-width:750px){ 
 	.mainXqInfor{padding-bottom: 20px;}
 	.articleTit_lis{ flex-wrap: wrap;}
 	.articleTit_lis .right{width: 100%;}
 	.backBtn{margin: 20px auto 0 auto;}
+	.main-rightCont{width: 100%;padding-left: 2%;}
 	
 .newsXq_pageNav{width: 96%; margin: 0 auto;position: initial; top: auto;right: auto; margin-bottom: 30px;}
 }
