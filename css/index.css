@@ -62,6 +62,7 @@
 }
 
 /* 环太聘 */
+.index_employ{overflow: hidden;}
 .index_employ .bjPic{ width: 100%; height: 345px; display: block;}
 .index_employ .cont{position: absolute; left: 50%; top: 50%;transform: translate(-50%,-50%); width: 100%;}
 .index_employ .Ltit{width: 102px; height: 102px; display: block; margin-right: 15px;}
@@ -78,8 +79,8 @@
 	/* 核心产品 */
 	.indx-sharebox ul{display: flex; justify-content: space-around; flex-wrap: wrap;}
 	.indx-sharebox li{ width: 50%;}
-	.indx-sharebox li .icon{  width: 40px; height: 40px;}
-	.indx-sharebox li h1{ font-size:15px;padding:15px 0 5px 0; line-height: 30px;}
+	.indx-sharebox li .icon{  width: 50px; height: 50px;}
+	.indx-sharebox li h1{ font-size:15px;padding:10px 0 5px 0; line-height: 26px;}
 	.indx-sharebox li p{ font-size: 12px;padding-top: 0px;}
 	
 	.index_casePic{ flex-wrap: wrap;}
