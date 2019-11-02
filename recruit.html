@@ -45,11 +45,11 @@
 				<div class="leftPic">
 					<img :src="mainData.mainImg&&mainData.mainImg[1]?mainData.mainImg[1].url:''">
 				</div>
-				<div class="R_Infor" id="news">
+				<div class="R_Infor">
 					<H2 class="title borderB1 color5">招聘岗位</H2>
-					<div class="scrollView">
+					<div class="scrollView"   id="news">
 						<ul class="list">
-							<a class="a" v-for="(item,index) in mainData.article" :href="'recruitDetail.html?id='+item.id">
+							<a  class="a" v-for="(item,index) in mainData.article" :href="'recruitDetail.html?id='+item.id">
 								<span class="L pubcolor">{{item.title}}</span>
 								<span class="M">{{item.description}}</span>
 								<span class="R">{{item.create_time}}</span>
@@ -146,6 +146,8 @@
 							for (var i = 0; i < self.mainData.article.length; i++) {
 								self.mainData.article[i].create_time = self.mainData.article[i].create_time.substr(0, 10)
 							}
+							
+							
 						}
 					};
 					window.base.labelGet(postData, callback);
@@ -159,13 +161,13 @@
 			background: #F5F5F5;
 		}
 		
-		.scrollView{
+		/* .scrollView{
 			height: 1200px;
 			position: relative;
 			padding: 0;
 			margin: 0;
 			top:0
-		}
+		} */
 		.recruit_index {
 			align-items: initial;
 			height: 550px;

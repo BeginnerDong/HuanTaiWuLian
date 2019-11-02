@@ -109,8 +109,8 @@
 						<div class="contInfor pdr10">
 							<div class="twoPhone white">
 								<p class="pdb5">环太物联</p>
-								<h2 class="fs20">029-85391630</h2>
-								<p class="fs12">wangpan@huan-tai.com</p>
+								<h2 class="fs20">{{conactData.phone}}</h2>
+								<p class="fs12">{{conactData.email}}</p>
 							</div>
 						</div>
 					</div>
@@ -143,7 +143,8 @@
 					leftNavData:[],
 					current:0,
 					currentCase:{},
-					labelData:{}
+					labelData:{},
+					conactData:{}
 				}
 			},
 			created: function() {
@@ -156,8 +157,9 @@
 					//window.base.bus.$emit('to_swiper',{mainData:self.teacherData});
 
 				};
-				self.getMainData()
-				self.getLabelData()
+				self.getMainData();
+				self.getLabelData();
+				self.getConactData()
 			},
 			methods: {
 				
@@ -253,6 +255,30 @@
 						}
 					};
 					window.base.labelGet(postData, callback);
+				},
+				
+				getConactData: function(id) {
+					var self = this;
+					var postData = {};
+					postData.searchItem = {
+						thirdapp_id:2,
+					};
+					postData.getBefore = {
+						caseData: {
+							tableName: 'Label',
+							searchItem: {
+								title: ['=', ['联系我们']],
+							},
+							middleKey: 'menu_id',
+							key: 'id',
+							condition: 'in',
+						},
+					};
+					var callback = (res) => {
+						console.log('打出来', res);
+						self.conactData = res.info.data[0];
+					};
+					window.base.articleGet(postData, callback);
 				},
 
 

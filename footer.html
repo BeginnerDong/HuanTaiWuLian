@@ -85,6 +85,9 @@
 				var callback = (res) => {
 					console.log('getMainData', res);
 					self.conactData = res.info.data[0];
+					window.base.bus.$emit('to_headBanner', {
+						conactData:self.conactData
+					});	
 				};
 				window.base.articleGet(postData, callback);
 			},
