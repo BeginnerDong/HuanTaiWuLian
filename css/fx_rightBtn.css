@@ -6,7 +6,11 @@
 	.fx_rightBtn .btnList .item .icon{width: 37px; height: 37px; display: block;margin: 0 auto;background: url(../images/icon-05.png) no-repeat 0 0/100% 100%;box-shadow: 0 0 5px rgba(150, 150, 150, 0.1);}
 	
 	.fx_rightBtn .btnList .item .contInfor{position: absolute; top: 50%;right: 40px;transform: translateY(-50%);padding-right: 10px; display: none;}
-	.fx_rightBtn .btnList .item .contInfor .kefubox{margin-right: -10px; display: block;}
+	
+	.fx_rightBtn .kefuPhoto{width: 119px; height: 138px; display: block;}
+	.fx_rightBtn .kefuBtn{ position: absolute; top: 58px; left: 8%; width: 75%; display: block;  height: 30px; line-height: 30px;background-image: linear-gradient(to bottom, #37b9f0 , #2187de);border-radius: 3px;text-align: center; color: #FFF;}
+	.fx_rightBtn .kefuBtn.kefuTwo{ top:95px;}
+	.fx_rightBtn .kefuBtn:hover{background: #0071c5;}
 	
 	.fx_rightBtn .twoPhone{padding: 10px 15px; background: #54afef;border-radius: 5px; width: 175px;box-sizing: border-box;position: relative;}
 	.fx_rightBtn .twoPhone:before{content: '';position: absolute;top:50%;transform: translateY(-50%);right:-10px;width:0;height:0;border-top:10px solid transparent;border-bottom:10px solid transparent;border-left:10px solid #54afef;}
