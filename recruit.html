@@ -46,16 +46,28 @@
 					<img :src="mainData.mainImg&&mainData.mainImg[1]?mainData.mainImg[1].url:''">
 				</div>
 				<div class="R_Infor">
-					<H2 class="title borderB1 color5">招聘岗位</H2>
-					<div class="scrollView"   id="news">
-						<ul class="list">
-							<a  class="a" v-for="(item,index) in mainData.article" :href="'recruitDetail.html?id='+item.id">
-								<span class="L pubcolor">{{item.title}}</span>
-								<span class="M">{{item.description}}</span>
-								<span class="R">{{item.create_time}}</span>
-							</a>
-						</ul>
+					<H2 class="title borderB1 color5" style="z-index: 999;">招聘岗位</H2>
+					
+					<div class="clearfix" style="position:relative;width: 100%;overflow: hidden;" :style="'height:' + theight +'px'">
+						<div class="scrollView"  @mouseover="selectStyle()" @mouseout="selectStyle('out')" :class="{animationTest:isAnimation,animationPaused:isAnimationPaused}" style="width:100%" >
+							<ul class="list" >
+								<a class="a" v-for="(item,index) in mainData.article" :href="'recruitDetail.html?id='+item.id">
+									<span class="L pubcolor">{{item.title}}</span>
+									<span class="M">{{item.description}}</span>
+									<span class="R">{{item.create_time}}</span>
+								</a>
+							</ul>
+							<ul class="list" >
+								<a class="a" v-for="(item,index) in mainData.article" :href="'recruitDetail.html?id='+item.id">
+									<span class="L pubcolor">{{item.title}}</span>
+									<span class="M">{{item.description}}</span>
+									<span class="R">{{item.create_time}}</span>
+								</a>
+							</ul>
+							
+						</div>
 					</div>
+					
 					
 				</div>
 			</div>
@@ -72,46 +84,35 @@
 					is_show: false,
 					is_toggle: false,
 					mainData: {},
-					
+					theight:928,
+					isAnimation:false,
+					isAnimationPaused:false
 				}
 			},
 			created: function() {
 				var self = this;
 				window.onload = function() {};
 				self.getMainData()
-				$(function() {
-					var $that = $("#news");
-					var scrollTimer;
-					$that.hover(function() {
-						clearInterval(scrollTimer);
-					}, function() {
-						scrollTimer = setInterval(function() {
-							self.scrollNews($that);
-						}, 1000);
-					}).trigger("mouseleave");
-				})
+				
 			},
 			methods: {
 
-				
-				scrollNews(obj) {
-					var $self = obj.find("ul");
-					var lineHeight = $self.find("a:first").height();
-					$self.animate({
-						"top": -lineHeight + "px"
-					}, 500, function() {
-						$self.css({
-							marginTop: 0
-						}).find("a:first").appendTo($self);
-					})
+				selectStyle(type){
+					const self = this;
+					if(type=='out'){
+						self.isAnimationPaused = false
+					}else{
+						self.isAnimationPaused = true
+					}
 				},
-
+				
 				chagetape(current) {
 					var self = this;
 					if (current != self.current) {
 						self.current = current
 					}
 				},
+				
 				goDetail(id) {
 					window.base.location
 				},
@@ -143,31 +144,55 @@
 					const callback = (res) => {
 						if (res.info.data.length > 0) {
 							self.mainData = res.info.data[0];
+							//self.mainData.article.push.apply(self.mainData.article,self.mainData.article);
+							console.log('self.mainData',self.mainData)
 							for (var i = 0; i < self.mainData.article.length; i++) {
 								self.mainData.article[i].create_time = self.mainData.article[i].create_time.substr(0, 10)
+							};
+							
+							if(self.mainData.article.length>8){
+								self.theight = 	self.mainData.article.length*58*2;
+								self.isAnimation = true
 							}
-							
-							
 						}
 					};
 					window.base.labelGet(postData, callback);
 				},
+				
+				
 			}
 		});
 	</script>
 
 	<style>
+		
+		
+		@keyframes topmove {
+		    0% { top: 0px;}
+		   20% { top: -10%;}
+		   40% { top: -20%;}
+		   60% { top: -30%;}
+		   80% { top: -40%;}
+		  100% { top: -50%;}
+		}
+	
+		
+		
 		html {
 			background: #F5F5F5;
 		}
 		
-		/* .scrollView{
-			height: 1200px;
-			position: relative;
-			padding: 0;
-			margin: 0;
-			top:0
-		} */
+		.scrollView{
+			position: absolute;
+			top:0;
+		}
+		
+		.animationTest{
+			animation: topmove 12s linear infinite forwards;
+		}
+		.animationPaused{
+			animation-play-state:paused;
+		}
 		.recruit_index {
 			align-items: initial;
 			height: 550px;
@@ -186,6 +211,7 @@
 			width: 68%;
 			background: #FFF;
 			margin-bottom: 40px;
+			overflow: hidden;
 		}
 
 		.R_Infor .title {
@@ -197,6 +223,7 @@
 		.R_Infor .list {
 			height: 464px;
 			overflow: hidden;
+			
 		}
 
 		.R_Infor .list a {
