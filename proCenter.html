@@ -21,7 +21,7 @@
 		
 	</head>
 
-	<body>
+	<body ontouchstart="" onmouseover="">
 		<div id="app">
 			<!-- 网站导航 -->
 			<div class="pubHeader">
@@ -72,8 +72,10 @@
 						<div class="contInfor" style="padding-right: 0;">
 							<div class="pr">
 								<img class="kefuPhoto" src="images/product_center-img2.png" >
-								<a class="kefuBtn" target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=125192878&site=qq&menu=yes">客服一</a>
-								<a class="kefuBtn kefuTwo" href="#">客服二</a>
+								<a class="kefuBtn" target="_blank"
+								:href="'http://wpa.qq.com/msgrd?v=3&uin='+qqData.description+'&site=qq&menu=yes'">客服一</a>
+								<a class="kefuBtn kefuTwo" target="_blank" 
+								:href="'http://wpa.qq.com/msgrd?v=3&uin='+qqData.url+'&site=qq&menu=yes'">客服二</a>
 							</div>
 						</div>
 					</div>
@@ -117,7 +119,8 @@
 					current:0,
 					currentPro:{},
 					labelData:{},
-					conactData:{}
+					conactData:{},
+					qqData:{}
 				}
 			},
 			created: function() {
@@ -128,11 +131,28 @@
 					//window.base.bus.$emit('to_swiper',{mainData:self.teacherData});
 
 				};
-				self.getMainData()
+				self.getMainData();
 				self.getLabelData();
-				self.getConactData()
+				self.getConactData();
+				self.getqqData()
 			},
 			methods: {
+				
+				getqqData() {
+					const self = this;
+					const postData = {};
+					postData.searchItem = {
+						thirdapp_id: 2,
+						title:'客服'
+					};
+					const callback = (res) => {
+						if (res.info.data.length > 0) {
+							self.qqData = res.info.data[0]		
+						} 
+					};
+					window.base.labelGet(postData, callback);
+				},
+				
 				change(index){
 					var self = this;
 					self.current = index;
